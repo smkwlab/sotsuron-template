@@ -3,20 +3,22 @@
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{url}
 \usepackage{comment} %コメントアウト
+\usepackage{otf} %ローマ数字
+\usepackage{multirow}
 
 \renewcommand{\bibname}{参考文献}
 \setcounter{secnumdepth}{4}
 
 \title{
 % 1行に入るなら行を分ける必要はないよ
- \Huge{長い長い}\\
- \Huge{卒論タイトル}
+ \Huge{長い長い\\卒論タイトル} 
  \vspace{3.5cm}\\
 }
-\author{\LARGE{17RS509}\vspace{0.5cm}\\
-\LARGE{九産　太郎}\vspace{2cm}\\
-\LARGE{九州産業大学 理工学部}\vspace{0.5cm}\\
-\LARGE{情報科学科}\vspace{1cm}\\
+\author{
+ \LARGE{17RS509}\vspace{0.5cm}\\
+ \LARGE{九産 太郎}\vspace{2cm}\\
+ \LARGE{九州産業大学 理工学部}\vspace{0.5cm}\\
+ \LARGE{情報科学科}\vspace{1cm}\\
 }
 \date{\LARGE{令和x年1月}}
 \pagestyle{plain}
@@ -50,15 +52,12 @@
 リハビリの手段の1つである理学療法は、
 運動機能の維持・改善を目的に運動、温熱、電気、水、
 光線などの物理的手段を用いて行われる治療である\cite{igaku}。% 文末の参考文献は句点より前に入れること。
-
-  
     
 \section{研究目的}\label{sec:mokuteki}
 
 本研究の目的は2つある。
 1つ目は、患者が日常生活の動作・環境に近い要素を取り入れた訓練を体験できることである。
 2つ目は、担当者が時間・場所を問わずに患者の訓練結果を把握できるようにすることである。
-å
   
 \section{論文構成}\label{sec:kousei}
 
@@ -69,7 +68,6 @@
 \ref{chap:keturon}章では本論文のまとめを述べる。
 
 % 実際には、設計や評価を書くのを忘れちゃダメだよ
-
 
 %-----------------------------------------------------------------------------------------------------------------
 
@@ -148,7 +146,6 @@
 \section{まとめ}\label{sec:matome}
  
 \section{今後の課題}\label{sec:kadai}
-
 
 %-----------------------------------------------------------------------------------------------------------------
 
