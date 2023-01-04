@@ -3,6 +3,7 @@ on:
 
 env:
   FILENAME: sotsuron
+  FILENAME2: gaiyou
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -11,19 +12,15 @@ jobs:
       - name: Checkout git repo
         uses: actions/checkout@v3
         with:
-          ref: draft
+          ref: ${{ github.event.pull_request.title }}
       - name: Build a PDF file by latexmk
-        run: latexmk $FILENAME.tex
-      - name: Create Git Tag
-        run: |
-          git config --global --add safe.directory ${GITHUB_WORKSPACE}
-          git tag ${{ github.event.pull_request.title }}
-          git push origin ${{ github.event.pull_request.title }}
+        run: latexmk $FILENAME $FILENAME2
       - name: Create a release
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ env.FILENAME }}.pdf
+          files: |
+            ${{ env.FILENAME }}.pdf
+            ${{ env.FILENAME2 }}.pdf
           tag_name: ${{ github.event.pull_request.title }}
-          release_name: ${{ github.event.pull_request.title }}
           draft: true
           prerelease: true
