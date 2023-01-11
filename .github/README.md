@@ -195,7 +195,7 @@ Pull Request を発行すると、[auto_assign_myteams.yml](.github/../auto_assi
 
 ## 4.2 PDF 生成
 
-ブランチ名と同じタイトルで Pull Request を発行すると、sotsuron.tex と gaiyou.tex から PDF を自動生成し、
+Pull Request を発行すると、sotsuron.tex と gaiyou.tex から PDF を自動生成し、
 GitHub 上の [Release](../../releases) に配置する。
 
 TeX 環境を持っていない人に PDF を見てもらうのに利用できる。
