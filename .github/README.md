@@ -203,7 +203,6 @@ TeX 環境を持っていない人に PDF を見てもらうのに利用でき�
 
 この機能が不要な場合には [release.yml](.github/../workflows/release.yml) を削除する。
 
-
 ## 5. その他
 
 質問があれば、遠慮なく smkwlabML ML へ。
