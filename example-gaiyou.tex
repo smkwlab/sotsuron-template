@@ -1,4 +1,4 @@
-\documentclass[uplatex,a4paper,10pt]{jsarticle}
+\documentclass[uplatex,a4paper,12pt]{jsarticle}
 \pagestyle{empty}
 \usepackage{otf}%ローマ数字
 
@@ -8,18 +8,18 @@
 \newcommand{\group}[1]{\def\group{#1}}
 
 \newcommand{\makeheader}{
-\newpage
+\vspace*{-20mm}
 \noindent\\九州産業大学 理工学部
 \noindent\\卒業研究発表会グループ\group
 \noindent\\卒業研究概要
-\vskip 20mm
+\vskip 10mm
 \begin{center}
   \title 
 \end{center}
-\vskip 15mm
+\vskip 5mm
 }
 \newcommand{\maketailer}{
-\vskip 20mm
+\vfill
 \begin{center}
 \setlength{\tabcolsep}{1mm}
 \begin{tabular}[h]{p{4zw}p{1em}l}
@@ -43,6 +43,8 @@
 \begin{rsabst}
 
 %↑rsabst 環境の1行目に空行を開けるのを忘れない
+%↓ここから概要の本文
+
 九州産業大学理工学部のプログラミング系の科目では、
 受講生が PC を用いて演習課題に取り組む時間がある。
 受講生の中には講義時間内に演習課題を解き終わらない者がいる。
@@ -53,7 +55,6 @@
 そのため、クラス全体の演習課題の演習進捗状況を把握することや、
 演習課題の解答に困っている受講生の発見をすることが
 困難という問題点がある。
-
 
 \end{rsabst}
 \end{document}
