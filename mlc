@@ -1,21 +1,23 @@
 #! /bin/sh
 # mlc: Merge LaTeX Container
-#
-[ -d .devcontainer ] && echo 'already merged' ; exit
 
-LATEX_REPO='https://github.com/smkwlab/latex-environment.git'
+if [ -d .devcontainer ]; then
+  echo already merged
+  exit
+fi
 
-git rm .gitignore .latexmkrc
-git commit -m 'remove .gitignore & .latexmkrc to avoid conflict'
+mkdir .tmp
+git mv .gitignore .latexmkrc .textlintrc .tmp
+git commit -m "mv files temporary to avoid conflict"
 
-REMOTE=latex-env
-git remote add ${REMOTE} ${LATEX_REPO}
-git fetch ${REMOTE}
-git merge --allow-unrelated-histories -m "merge latex environment" ${REMOTE}/main
-git remote remove ${REMOTE}
+echo merge LaTeX environment
+git remote add latexenv https://github.com/smkwlab/latex-environment.git
+git fetch latexenv
+git merge --allow-unrelated-histories -m "merge latex environment" latexenv/main
+git remote remove latexenv
 
-cat .gitignore-local >> .gitignore
-rm .gitignore-local
-git add .
-git commit -m 'update .gitignore'
+git rm -r .gitignore .latexmkrc .textlintrc
+git mv .tmp/.gitignore .tmp/.latexmkrc .tmp/.textlintrc .
+
+git commit -m "update .gitignore & .textlintrc"
 git push
