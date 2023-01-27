@@ -18,6 +18,7 @@ git remote remove latexenv
 
 git rm -r .gitignore .latexmkrc .textlintrc
 git mv .tmp/.gitignore .tmp/.latexmkrc .tmp/.textlintrc .
+rmdir .tmp
 
 git commit -m "update .gitignore & .textlintrc"
 git push

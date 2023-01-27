@@ -361,11 +361,6 @@ tags
 !.vscode/extensions.json
 *.code-workspace
 
-# for markdown preview
-*.html
-
-*-diffHEAD.tex
-
 sotsuron.pdf
 gaiyou.pdf
 example.tex
