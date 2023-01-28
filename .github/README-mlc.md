@@ -4,7 +4,7 @@
 
 下川研 LaTeX 環境は、Visual Studio Code (VSCode) および
 その devcontainer 機能を利用する。
-そのため、[VScode + DevContainer 環境構築](https://github.com/smkwlab/latex-environment/blob/main/SETUP-DevContainer.md)に従って、各種ツールをインストールする。
+そのため、[VSCode + devcontainer 環境構築](https://github.com/smkwlab/latex-environment/blob/main/.devcontainer/SETUP-devcontainer.md)に従って、各種ツールをインストールする。
 
 ## 2. 下川研 LaTeX 環境利用方法
 
