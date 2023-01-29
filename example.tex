@@ -5,6 +5,26 @@
 \usepackage{comment} %コメントアウト
 \usepackage{otf} %ローマ数字
 \usepackage{multirow}
+\usepackage{listings,plistings}
+\renewcommand{\lstlistingname}{ソースコード}
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
 
 \renewcommand{\bibname}{参考文献}
 \setcounter{secnumdepth}{4}
@@ -136,7 +156,21 @@
 \end{figure}
 
 \subsection{ユーザ選択画面}\label{sec:all}
-ユーザ選択画面は、本アプリケーションを利用する際あらかじめデータベースに登録されているユーザを認証する画面である。
+ユーザ選択画面は、本アプリケーションを利用する際あらかじめデータベースに登録されているユーザを選択する画面である。
+
+ユーザ選択画面のソースコードを、ソースコード\ref{fig:user-selection}に示す。
+1行目で選択用のテキストエリアを生成している
+4行目の``選択''ボタンで内容を決定する。
+``選択''ボタンは、Bootstrap により見栄えを指定している。
+
+\begin{lstlisting}[caption=ユーザ選択画面,label=fig:user-selection]
+<textarea class="form-control" name="check_contents" id="exampleFormControlTextarea1" rows="5"></textarea>
+<hr />
+<div class="form-group">
+  <button type="submit" name="check_ok" value="1" class="btn btn-primary btn-lg">選択</button>
+</div>
+\end{lstlisting}
+
 
 %-----------------------------------------------------------------------------------------------------------------
 
