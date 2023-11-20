@@ -5,6 +5,26 @@
 \usepackage{comment} %コメントアウト
 \usepackage{otf} %ローマ数字
 \usepackage{multirow}
+\usepackage{listings,plistings}
+\renewcommand{\lstlistingname}{ソースコード}
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
 
 \renewcommand{\bibname}{参考文献}
 \setcounter{secnumdepth}{4}
