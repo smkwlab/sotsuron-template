@@ -32,7 +32,7 @@ LaTeX の環境は[aldc (Add Linx DevContainer)](https://github.com/smkwlab/aldc
 下川研 LaTeX 環境を使うことで、LaTeX 以外に
 textlint も利用可能となる。
 
-なお、aldc を使用した場合、使用後に一度 git で commit と push をしておくこと。
+なお aldc を実行後に、一度 git で commit をしておくこと。
 
 ## 1. 基本的な使い方
 
