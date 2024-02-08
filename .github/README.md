@@ -36,8 +36,6 @@ LaTeX の環境は[aldc (Add Linx DevContainer)](https://github.com/smkwlab/aldc
 textlint も利用可能となるので、
 この方法をとることを推奨する。
 
-なお、aldc を使用した場合、使用後に一度 git で commit と push をしておくこと。
-
 ## 1. 基本的な使い方
 
 卒業論文を執筆する上で、論文をバージョン管理していく。
