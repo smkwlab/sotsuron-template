@@ -1,0 +1,40 @@
+name: Build and Release PDF
+
+on:
+  workflow_call:
+    inputs:
+      file:
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container: ghcr.io/smkwlab/alpine-texlive-ja-textlint:latest
+    steps:
+      - name: Check file existence $FILENAME.tex
+        id: check_src
+        uses: andstor/file-existence-action@v3
+        with:
+          files: ${{ inputs.file }}.tex
+      - name: Build $FILENAME.pdf by latexmk
+        if: steps.check_src.outputs.files_exists == 'true'
+        run: latexmk ${{ inputs.file }}.tex
+      - name: Check file existence $FILENAME.pdf
+        id: check_pdf
+        uses: andstor/file-existence-action@v3
+        with:
+          files: ${{ inputs.file }}.pdf
+      - name: Create a release $FILENAME.pdf
+        if: steps.check_pdf.outputs.files_exists == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ inputs.file }}.pdf
+          tag_name: ${{ github.head_ref }}-release
+          draft: false
+          prerelease: true
+          generate_release_notes: true
