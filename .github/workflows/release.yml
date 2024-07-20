@@ -7,21 +7,12 @@ permissions:
   contents: write
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    container: ghcr.io/smkwlab/alpine-texlive-ja-textlint:latest
-    steps:
-      - name: Checkout git repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+  sotsuron:
+    uses: ./.github/workflows/build-and-release.yml
+    with:
+      file: sotsuron
 
-      - name: build sotsuron.pdf
-        uses: ./.github/workflows/build-and-release.yml
-        with:
-          file: sotsuron
-
-      - name: build gaiyou.pdf
-        uses: ./.github/workflows/build-and-release.yml
-        with:
-          file: gaiyou
+  gaiyou:
+    uses: ./.github/workflows/build-and-release.yml
+    with:
+      file: gaiyou
