@@ -6,64 +6,13 @@ on:
 permissions:
   contents: write
 
-env:
-  FILENAME: sotsuron
-  FILENAME2: gaiyou
-
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    container: ghcr.io/smkwlab/alpine-texlive-ja-textlint:latest
-    steps:
-      - name: Checkout git repo
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+  sotsuron:
+    uses: ./.github/workflows/build-and-release.yml
+    with:
+      file: sotsuron
 
-      - name: Check file existence $FILENAME.tex
-        id: check_src
-        uses: andstor/file-existence-action@v3
-        with:
-          files: ${{ env.FILENAME }}.tex
-      - name: Build $FILENAME.pdf by latexmk
-        if: steps.check_src.outputs.files_exists == 'true'
-        run: latexmk ${{ env.FILENAME }}.tex
-      - name: Check file existence $FILENAME.pdf
-        id: check_pdf
-        uses: andstor/file-existence-action@v3
-        with:
-          files: ${{ env.FILENAME }}.pdf
-      - name: Create a release $FILENAME.pdf
-        if: steps.check_pdf.outputs.files_exists == 'true'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            ${{ env.FILENAME }}.pdf
-          tag_name: ${{ github.head_ref }}-release
-          draft: false
-          prerelease: true
-          generate_release_notes: true
-
-      - name: Check file existence $FILENAME2.tex
-        id: check_src_2
-        uses: andstor/file-existence-action@v3
-        with:
-          files: ${{ env.FILENAME2 }}.tex
-      - name: Build $FILENAME2.pdf
-        if: steps.check_src_2.outputs.files_exists == 'true'
-        run: latexmk ${{ env.FILENAME2 }}.tex
-      - name: Check file existence $FILENAME2.pdf
-        id: check_pdf_2
-        uses: andstor/file-existence-action@v3
-        with:
-          files: ${{ env.FILENAME2 }}.pdf
-      - name: Create a release $FILENAME2.pdf
-        if: steps.check_pdf_2.outputs.files_exists == 'true'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            ${{ env.FILENAME2 }}.pdf
-          tag_name: ${{ github.head_ref }}-release
-          draft: false
-          prerelease: true
-          generate_release_notes: true
+  gaiyou:
+    uses: ./.github/workflows/build-and-release.yml
+    with:
+      file: gaiyou
