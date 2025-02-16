@@ -42,7 +42,7 @@
 
 1. テンプレートリポジトリをコピーして自分用のリポジトリーを作成
 2. リポジトリーをPCにクローン
-3. [aldc (Add Linx DevContainer)](https://github.com/smkwlab/aldc/blob/main/README.md)を使って
+3. [aldc (Add Linx DevContainer)](https://github.com/smkwlab/aldc)を使って
 下川研 LaTeX 環境を構築
 4. この時点で一度 commit, push しmainブランチを更新
 5. 目次案の記述
@@ -156,9 +156,12 @@ Current Branch
     - 最終版の原稿に `final` というタグを打つ
       - GitHub Desktop の `History` で一番上にある履歴を右クリック
       - `Create Tag...` をクリック
-      - `Name` に **final** と入力し `Create Tag` ボタンをクリック
-      - 提出終了。お疲れ様。
-4. NG ならば現在の草稿上で編集([2.7](#27-編集作業)に戻る)
+      - `Name` に **submit** と入力し `Create Tag` ボタンをクリックしてタグを付与
+      - `Push origin` をクリックして、タグを Github にプッシュ
+      - 提出準備終了
+      - 提出締め切りまでに印刷物を提出するのを忘れない
+      - なお、論文提出後は、[概要](../gaiyou.tex)の作成と口頭試問の準備
+4. NG ならば現在の草稿上で編集([2.7](#27-編集作業))に戻る
 
 ### 2.11 作業サンプル
 
@@ -194,7 +197,7 @@ Github 上で、Insights → Network
 
 ### 3.3 LaTeX的な注意事項
 
-- 図や表にはキャプションを入れる。入れ方は[example.tex](example.tex)を参考にすること
+- 図や表にはキャプションを入れる。入れ方は[example.tex](../example.tex)を参考にすること
 - 原則として、1文1行で記述すること
   - 差分が見やすいし、編集指示も出しやすい
 - `\\` による改行は `tabular` 環境以外では原則として使用不可
@@ -205,22 +208,22 @@ Github 上で、Insights → Network
 
 ## 4.1 Reviewer 割当
 
-Pull Request を発行すると、[auto_assign_myteams.yml](.github/../auto_assign_myteams.yml) に基づき Reviewers を自動で設定する。
+Pull Request を発行すると、[.github/auto_assign_myteams.yml](auto_assign_myteams.yml) に基づき Reviewers を自動で設定する。
 デフォルトでは、下川(toshi0806)を指定している。
 下川研の学生はこのままで問題ない。
 他の研究室の学生が利用する場合には、ここの設定を変更すること。
 
-この機能が不要な場合には [auto_assign_myteams.yml](.github/../auto_assign_myteams.yml) を削除する。
+この機能が不要な場合には auto_assign_myteams.yml を削除する。
 
 ## 4.2 PDF 生成
 
 Pull Request を発行すると、sotsuron.tex と gaiyou.tex から PDF を自動生成し、
-GitHub 上の [Release](../../releases) に配置する。
+GitHub 上の [Release](../releases/) に配置する。
 
 TeX 環境を持っていない人に PDF を見てもらうのに利用できる。
 ただし、ここで作成された Release は一般公開されない。
 
-この機能が不要な場合には [check.yml](.github/../workflows/check.yml) を削除する。
+この機能が不要な場合には [.github/workflows/latex-build.yml](workflows/latex-build.yml) を削除する。
 
 ## 5. その他
 
