@@ -9,10 +9,6 @@ addReviewers: true
 # Reviewerに設定するメンバを追加します。
 reviewers:
   - toshi0806
-  - shilverchips
-  - 427harinn
-  - rnachiko
-  - k20rs085
 
 # Reviewersに追加するメンバ数を指定できます。
 # 追加メンバより設定数が少ない場合、ランダムで追加されます。
