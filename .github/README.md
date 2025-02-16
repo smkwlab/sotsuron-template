@@ -218,12 +218,12 @@ Pull Request を発行すると、[.github/auto_assign_myteams.yml](auto_assign_
 ## 4.2 PDF 生成
 
 Pull Request を発行すると、sotsuron.tex と gaiyou.tex から PDF を自動生成し、
-GitHub 上の [Release](../releases/) に配置する。
+GitHub 上の [Release](../../releases/) に配置する。
 
 TeX 環境を持っていない人に PDF を見てもらうのに利用できる。
 ただし、ここで作成された Release は一般公開されない。
 
-この機能が不要な場合には [.github/workflows/latex-build.yml](workflows/latex-build.yml) を削除する。
+この機能が不要な場合には [.github/workflows/latex-build.yml](latex-build.yml) を削除する。
 
 ## 5. その他
 
