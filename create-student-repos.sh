@@ -213,7 +213,7 @@ initial-empty (空の初期状態) ← レビュー用PRのベース
 
 1. **差分レビュー**: 各版のPRで直前版からの変更をレビュー
 2. **全体レビュー**: このPRで論文全体をレビュー
-3. **update-review-branch.sh**: 学生PR後に実行してこのPRを最新化
+3. **自動更新**: GitHub Actions により学生PR作成時に自動更新
 
 ### レビュー対象ファイル
 
@@ -237,7 +237,7 @@ initial-empty (空の初期状態) ← レビュー用PRのベース
 学生がsuggestionを適用した場合：
 1. 学生: 「Apply suggestion」→「Re-request review」🔄
 2. 教員: 確認後にmerge
-3. 教員: \`update-review-branch.sh\` でこのPRを最新化
+3. システム: GitHub Actions が自動的にこのPRを最新化
 
 ### 並行作業
 

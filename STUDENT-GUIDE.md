@@ -17,10 +17,11 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 1. **リポジトリをPCにクローン**
 2. **0th-draft ブランチで目次案を作成・提出**
-3. **1st-draft ブランチで第1稿を執筆・提出**
+3. **自動作成された 1st-draft ブランチで第1稿を執筆・提出**
 4. **教員の添削を確認し、必要に応じてSuggestionを適用**
-5. **2nd-draft ブランチで第2稿を執筆**
-6. **3稿目以降も同様に繰り返し**
+5. **自動作成された 2nd-draft ブランチで第2稿を執筆**
+6. **3稿目以降も同様に繰り返し（次稿ブランチは自動作成）**
+7. **教員の指示で概要執筆開始**（論文本体がある程度完成した段階）
 
 ## 詳細な操作手順
 
@@ -47,13 +48,15 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 ### 3. 第1稿の執筆（1st-draft）
 
-#### 3.1 ブランチ作成
+#### 3.1 ブランチの切り替え
 
-1. GitHub Desktop で `Current Branch` ボタンをクリック
-2. `New Branch` ボタンをクリック
-3. `Name` を **1st-draft** とする
-4. `Create branch based on...` で **0th-draft** を選択（重要！）
-5. `Create Branch` → `Publish branch` をクリック
+0th-draft のPRを作成すると、1st-draft ブランチが自動作成されます：
+
+1. **自動作成されたブランチに切り替え**
+   - GitHub Desktop で `Fetch origin` をクリック
+   - `Current Branch` をクリックして一覧を表示
+   - **`origin/1st-draft`** を選択
+   - 「Create a new branch」が表示されるので、`Create branch` をクリック
 
 #### 3.2 論文執筆
 
@@ -115,16 +118,22 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 ### 5. 次稿の準備（2nd-draft以降）
 
-#### 5.1 ブランチ作成
+#### 5.1 自動ブランチ作成
 
-1. GitHub Desktop で `Current Branch` ボタンをクリック
-2. `New Branch` ボタンをクリック
-3. `Name` を **2nd-draft** など、次の稿であることが分かる名前にする
-4. `Create branch based on...` で以下を選択：
-   - **1st-draft → 2nd-draft**: `1st-draft` を選択
-   - **2nd-draft → 3rd-draft**: `2nd-draft` を選択
-   - ※ **直前の稿をベースとする**（差分を明確にするため）
-5. `Create branch` → `Publish branch` をクリック
+**重要**: 0th-draft、1st-draft、2nd-draft のPRを作成すると、**次稿用ブランチが自動的に作成されます**。
+
+1. **PRを作成すると自動実行**
+   - 例：1st-draft のPR作成 → 2nd-draft ブランチが自動作成
+   - PRのコメントに「🌿 次稿用ブランチを自動作成しました」と通知
+
+2. **自動作成されたブランチに切り替え**
+   - GitHub Desktop で `Fetch origin` をクリック
+   - `Current Branch` をクリックして一覧を表示
+   - **`origin/2nd-draft`** のように表示されているブランチを選択
+   - 「Create a new branch」が表示されるので、`Create branch` をクリック
+
+3. **手動作成が必要な場合のみ**（自動作成が失敗した場合）
+   - 教員に相談してください
 
 #### 5.2 効率的な執筆方法
 
@@ -162,7 +171,41 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
    - 画面の指示に従って競合を手動で解決
    - 解決後、`Continue merge` をクリック
 
-### 6. 最終提出
+### 6. 概要の執筆（gaiyou.tex）
+
+**重要**: 概要の執筆は、**教員から指示があったタイミング**で開始します。通常、論文本体がある程度完成した段階です。
+
+#### 6.1 概要用ブランチの作成
+
+1. **教員からの指示を待つ**
+   - 教員が「概要執筆を開始してください」と指示
+
+2. **最初のブランチは手動作成**
+   - GitHub Desktop で `New Branch`
+   - 名前: `abstract-1st`
+   - ベース: **その時点で最新の稿ブランチ**（例：`5th-draft`）
+   - `Create branch` → `Publish branch`
+
+3. **PRを作成すると次のブランチが自動作成**
+   - abstract-1st → abstract-2nd（自動、前版の概要を引き継ぎ）
+   - abstract-2nd → abstract-3rd（自動、前版の概要を引き継ぎ）
+   - 以降も同様
+   
+   **論文本体への反映**: 概要執筆後の論文本体（6th-draft以降）には、最新の概要が自動的に含まれます
+   
+   **ブランチの切り替え方法**:
+   - GitHub Desktop で `Fetch origin` → `Current Branch` をクリック
+   - **`origin/abstract-2nd`** のように表示されているブランチを選択
+   - 「Create a new branch」で `Create branch` をクリック
+
+#### 6.2 概要の執筆手順
+
+1. `gaiyou.tex` を編集
+2. 論文本体と同様にcommit & push
+3. PR作成時のタイトル: `abstract-1st` など
+4. 次稿は自動作成されたブランチで継続
+
+### 7. 最終提出
 
 教員からOKの返事が来たら：
 
@@ -177,7 +220,7 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 ## よくある質問
 
 ### Q: ブランチを間違って作成した場合は？
-A: GitHub Desktop でブランチを削除し、正しいベースから作り直してください。
+A: 基本的にブランチは自動作成されるため、手動作成は不要です。問題がある場合は教員に相談してください。
 
 ### Q: commitを間違えた場合は？
 A: 新しいcommitで修正するか、教員に相談してください。
@@ -200,11 +243,21 @@ A: 以下を確認してください：
 - VSCode左下に「Dev Container」の表示があることを確認
 - 拡張機能タブで LaTeX Workshop が有効になっていることを確認
 
+### Q: 自動作成されたブランチが見つからない場合は？
+A: 以下の手順で確認してください：
+1. GitHub Desktop で `Fetch origin` を実行
+2. `Current Branch` をクリック
+3. **`origin/`** で始まるブランチ名を探す（例：`origin/2nd-draft`）
+4. 見つからない場合は、PRの自動作成が失敗している可能性があります
+
+### Q: いつ概要の執筆を始めれば良いですか？
+A: 教員からの指示を待ってください。通常、論文本体の構成が固まった段階（3rd-draft以降）で指示があります。その時点で最新の稿ブランチをベースにabstract-1stを作成します。
+
 
 ## 注意点
 
 - **ブランチ名の命名**: 0th-draft → 1st-draft → 2nd-draft の順序を守る
-- **ベースブランチ**: 第1稿以降は必ず直前の稿をベースにする
+- **自動作成ブランチ**: PRを作成すると次稿ブランチが自動作成される
 - **commit頻度**: こまめにcommitして変更履歴を残す
 - **PR作成**: 各稿の完成時に必ずPRを作成する
 - **印刷推敲**: 画面だけでなく必ず印刷して確認する

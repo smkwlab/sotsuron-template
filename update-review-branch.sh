@@ -1,7 +1,14 @@
 #!/bin/bash
 
-# レビュー用ブランチ更新スクリプト（教員用）
-# 使用例: 
+# ⚠️ 【非推奨】レビュー用ブランチ更新スクリプト（教員用）
+# 
+# 現在はGitHub Actionsによる自動更新を推奨しています。
+# このスクリプトは緊急時やトラブルシューティング用として残されています。
+#
+# 🔄 自動更新: 学生がPRを作成すると GitHub Actions が自動的にreview-branchを更新
+# 📁 ワークフロー: .github/workflows/update-review-branch.yml
+#
+# 使用例（非推奨）: 
 #   ./update-review-branch.sh k21rs001-sotsuron 1st-draft  (リポジトリ名指定)
 #   ./update-review-branch.sh 1st-draft                    (Gitリモートからリポジトリ名を自動取得)
 #   ./update-review-branch.sh                              (Gitリモートからリポジトリ名と最新PRを自動取得)
@@ -197,6 +204,46 @@ echo "$SOURCE_BRANCH の内容をreview-branchにマージ中..."
 if git merge "origin/$SOURCE_BRANCH" --no-edit; then
     echo "✓ マージ成功"
     
+    # draft系ブランチの場合、最新のabstractがあれば概要ファイルもマージ
+    if [[ "$SOURCE_BRANCH" =~ -draft$ ]]; then
+        echo "draft系ブランチを検出。最新の概要を確認中..."
+        
+        # 最新のabstractブランチを検索（20thから逆順で探す）
+        LATEST_ABSTRACT=""
+        for i in {20..1}; do
+            case $i in
+                1|21) SUFFIX="st" ;;
+                2|22) SUFFIX="nd" ;;
+                3|23) SUFFIX="rd" ;;
+                *) SUFFIX="th" ;;
+            esac
+            
+            ABSTRACT_BRANCH="abstract-${i}${SUFFIX}"
+            if git show-ref --verify --quiet "refs/remotes/origin/$ABSTRACT_BRANCH"; then
+                LATEST_ABSTRACT="$ABSTRACT_BRANCH"
+                break
+            fi
+        done
+        
+        # 最新のabstractが見つかった場合は概要ファイルをマージ
+        if [ -n "$LATEST_ABSTRACT" ]; then
+            echo "最新の概要ブランチを発見: $LATEST_ABSTRACT"
+            echo "gaiyou.tex を $LATEST_ABSTRACT からマージ中..."
+            
+            # gaiyou.texのみを最新のabstractから取得
+            if git show "origin/$LATEST_ABSTRACT:gaiyou.tex" > /dev/null 2>&1; then
+                git checkout "origin/$LATEST_ABSTRACT" -- gaiyou.tex
+                git add gaiyou.tex
+                git commit -m "Update abstract from $LATEST_ABSTRACT" || true
+                echo "✓ 概要ファイルを $LATEST_ABSTRACT からマージしました"
+            else
+                echo "gaiyou.tex が $LATEST_ABSTRACT に見つかりませんでした"
+            fi
+        else
+            echo "概要ブランチが見つかりません"
+        fi
+    fi
+    
     # リモートにプッシュ
     echo "リモートにプッシュ中..."
     if git push origin review-branch; then
@@ -213,6 +260,9 @@ if git merge "origin/$SOURCE_BRANCH" --no-edit; then
         echo ""
         echo "✓ review-branchの更新が完了しました"
         echo "  最新版: $SOURCE_BRANCH"
+        if [ -n "$LATEST_ABSTRACT" ]; then
+            echo "  概要: $LATEST_ABSTRACT からマージ済み"
+        fi
         echo "  レビュー用PR（initial-empty → review-branch）で論文全体への添削が可能です"
         echo "  merge済み箇所を含む全体にコメントできます"
     else
@@ -241,6 +291,9 @@ fi
 
 echo ""
 echo "=== 更新完了 ==="
+echo "⚠️  注意: このスクリプトは非推奨です"
+echo "今後は GitHub Actions による自動更新をご利用ください"
+echo ""
 echo "次のステップ:"
 echo "1. レビュー用PR（initial-empty → review-branch）で全体的な添削を実施"
 echo "   → merge済み箇所を含む論文全体にコメント可能"
