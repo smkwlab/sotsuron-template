@@ -3,6 +3,7 @@
 ## はじめに
 
 このガイドは、GitHub Desktop を使った論文執筆の詳細な操作手順を説明します。
+卒業論文・修士論文の両方に対応しています。
 基本的な使い方は [README.md](README.md) を先に確認してください。
 
 Git の詳しい知識は必要ありません。GitHub Desktop の操作だけで論文執筆を完了できます。
@@ -11,9 +12,21 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 教員により以下が事前に準備されています：
 - 個人用リポジトリの作成
+- **論文タイプ別ファイル調整**（卒論生には卒論用、修論生には修論用ファイルのみ配置）
 - **LaTeX devcontainer 追加済み**
 - 0th-draft ブランチの作成
 - レビュー用PRの設定
+
+### 論文タイプ別ファイル構成
+
+**卒業論文学生の場合：**
+- `sotsuron.tex` - 論文本体
+- `gaiyou.tex` - 概要
+- `example.tex`, `example-gaiyou.tex` - 参考例
+
+**修士論文学生の場合：**
+- `thesis.tex` - 論文本体  
+- `abstract.tex` - 概要
 
 ## 基本的な流れ
 
@@ -38,7 +51,7 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 1. GitHub Desktop で `Current Branch` が `0th-draft` になっていることを確認
    - もし `main` になっている場合は `0th-draft` に切り替え
-2. VSCode で [sotsuron.tex](sotsuron.tex) を編集し、`chapter`, `section`, `subsection` などを記述
+2. VSCode で論文メインファイル（`sotsuron.tex` または `thesis.tex`）を編集し、`chapter`, `section`, `subsection` などを記述
 3. **PDF の生成・プレビュー**
    - VSCode で ▷ ボタン（Build LaTeX project）をクリックして PDF を生成
    - 🔍 ボタン（View LaTeX PDF）をクリックして VSCode 内でプレビュー
@@ -174,7 +187,7 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 **重要**: 教員はPRをマージしません。対応完了後は自分でPRをクローズします。
 
-### 6. 概要の執筆（gaiyou.tex）
+### 6. 概要の執筆
 
 **重要**: 概要の執筆は、**教員から指示があったタイミング**で開始します。通常、論文本体がある程度完成した段階です。
 
@@ -203,7 +216,7 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 #### 6.2 概要の執筆手順
 
-1. `gaiyou.tex` を編集
+1. 概要ファイル（`gaiyou.tex` または `abstract.tex`）を編集
 2. 論文本体と同様にcommit & push
 3. PR作成時のタイトル: `abstract-1st` など
 4. 次稿は自動作成されたブランチで継続

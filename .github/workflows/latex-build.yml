@@ -16,4 +16,4 @@ jobs:
     steps:
       - uses: smkwlab/latex-release-action@v2
         with:
-          files: sotsuron, gaiyou
+          files: sotsuron, gaiyou, thesis, abstract

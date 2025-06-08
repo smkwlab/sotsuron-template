@@ -1,6 +1,6 @@
-# 卒業論文テンプレート
+# 論文テンプレート
 
-九州産業大学理工学部情報科学科の卒業論文用 LaTeX テンプレートです。
+九州産業大学理工学部情報科学科の卒業論文・九州産業大学大学院情報科学研究科の修士論文用 LaTeX テンプレートです。
 
 ## 🎯 学生向けクイックスタート
 
@@ -47,15 +47,20 @@ abstract-1st: 概要執筆・提出
 
 ## 📁 ファイル構成
 
-### 必須ファイル
+### 論文タイプ別ファイル
 
-- **`sotsuron.tex`**: 論文本体（編集対象）
-- **`gaiyou.tex`**: 概要（教員指示後に編集）
+#### 卒業論文用
+- **`sotsuron.tex`**: 卒業論文本体（編集対象）
+- **`gaiyou.tex`**: 卒業論文概要（教員指示後に編集）
 
-### 参考ファイル
+#### 修士論文用  
+- **`thesis.tex`**: 修士論文本体（編集対象）
+- **`abstract.tex`**: 修士論文概要（教員指示後に編集）
 
-- **`example.tex`**: 論文執筆の例・参考
-- **`example-gaiyou.tex`**: 概要執筆の例・参考
+### 参考ファイル（卒業論文）
+
+- **`example.tex`**: 卒業論文執筆の例・参考
+- **`example-gaiyou.tex`**: 卒業論文概要執筆の例・参考
 
 ### 設定ファイル
 
@@ -162,12 +167,22 @@ def hello_world():
 
 ### コマンド
 
+#### 卒業論文
 ```bash
 # PDF 生成
 latexmk -pv sotsuron.tex
 
 # 概要生成
 latexmk -pv gaiyou.tex
+```
+
+#### 修士論文
+```bash
+# PDF 生成
+latexmk -pv thesis.tex
+
+# 概要生成
+latexmk -pv abstract.tex
 ```
 
 ## 🆘 困った時は
@@ -219,6 +234,5 @@ latexmk -pv gaiyou.tex
 
 **関連リポジトリ**:
 - [thesis-management-tools](https://github.com/smkwlab/thesis-management-tools) - 詳細ガイド・教員向けツール
-- [master-template](https://github.com/smkwlab/master-template) - 修士論文用テンプレート
 
 **質問・サポート**: smkwlabML または担当教員まで
