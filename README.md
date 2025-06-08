@@ -33,16 +33,17 @@
 abstract-1st: 概要執筆・提出
 ```
 
-**重要**: PRは添削用のみです。教員はPRをmergeしません。添削対応完了後は**自分でPRをclose**します。
+**重要**: PRは添削用のみです。教員はPRをマージしません。添削対応完了後は**自分でPRをクローズ**します。
 
 ### 3. 詳細な操作手順
 
-**包括的な執筆ガイド**: [thesis-management-tools](https://github.com/smkwlab/thesis-management-tools)
+**詳細な執筆ガイド**: [WRITING-GUIDE.md](WRITING-GUIDE.md)
+- GitHub Desktop の詳細操作
+- トラブルシューティング
+- よくある質問・対処法
+- 高度な使い方
 
-- 詳細な操作手順
-- GitHub Desktop の使い方
-- 添削への対応方法
-- よくある質問・トラブル対応
+**教員向けツール**: [thesis-management-tools](https://github.com/smkwlab/thesis-management-tools)
 
 ## 📁 ファイル構成
 
@@ -97,13 +98,13 @@ abstract-1st: 概要執筆・提出
 3. 定期的に commit & push
 4. 完成したら Pull Request 作成
 
-### 3. 添削対応とPRのclose
+### 3. 添削対応とPRのクローズ
 
 1. **教員の添削確認**
    - GitHub で教員からのコメントを確認
    - 必要に応じて修正・追記
 
-2. **PRのclose**
+2. **PRのクローズ**
    ```
    添削対応完了後:
    1. GitHub Web で該当PRページにアクセス
@@ -113,7 +114,7 @@ abstract-1st: 概要執筆・提出
 
 3. **次稿執筆**
    - 各稿のPR作成時に次稿ブランチが自動作成済み
-   - 前稿のPR closeと並行して次稿執筆可能
+   - 前稿のPRクローズと並行して次稿執筆可能
 
 ## 📝 執筆時の注意
 
@@ -184,13 +185,13 @@ latexmk -pv gaiyou.tex
 #### 3. ブランチの切り替えができない
 - 変更内容を commit してからブランチ切り替え
 
-#### 4. PRをいつclose すべきか分からない
+#### 4. PRをいつクローズすべきか分からない
 - 教員の添削を確認し、対応が完了したタイミング
-- 次稿執筆前にcloseする必要はなし（並行作業可能）
+- 次稿執筆前にクローズする必要はなし（並行作業可能）
 
 ### サポート
 
-1. **詳細ガイド**: [thesis-management-tools](https://github.com/smkwlab/thesis-management-tools)
+1. **詳細ガイド**: [WRITING-GUIDE.md](WRITING-GUIDE.md)
 2. **質問**: smkwlabML で質問共有
 3. **トラブル**: 教員に直接相談
 
@@ -205,7 +206,7 @@ latexmk -pv gaiyou.tex
 ### 最終提出時
 
 1. 最終稿のPRを教員が承認
-2. 自分で最終稿PRをclose
+2. 自分で最終稿PRをクローズ
 3. 教員からOKが出たら `submit` タグを作成
 4. 印刷版も忘れずに提出
 
