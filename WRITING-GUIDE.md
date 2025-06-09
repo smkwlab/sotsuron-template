@@ -239,17 +239,46 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 3. PR作成時のタイトル: `abstract-1st` など
 4. 次稿は自動作成されたブランチで継続
 
-### 7. 最終提出
+### 7. 論文提出
 
-教員からOKの返事が来たら：
+教員から「論文提出OK」の許可が出たら：
 
-1. **提出版にタグを付与**
-   - GitHub Desktop の `History` で最新の履歴を右クリック
+#### 7.1 提出版へのタグ付与
+
+1. **submit tagを作成**
+   
+   GitHub Desktop で：
+   - `History` で最新コミットを右クリック
    - `Create Tag...` をクリック
    - `Name` に **submit** と入力
-   - `Create Tag` → `Push origin` でタグをプッシュ
+   - `Create Tag` → `Push origin`
 
 2. **印刷物の提出** も忘れずに実施
+
+#### 7.2 概要執筆の準備
+
+submit タグ作成後、教員の指示で概要執筆を開始します：
+
+1. **概要用ブランチの作成**
+   - GitHub Desktop で `New Branch`
+   - 名前: `abstract-1st`
+   - ベース: **submit タグを作成したブランチ**
+   - `Create branch` → `Publish branch`
+
+2. **概要の執筆**
+   - 概要ファイル（`gaiyou.tex` または `abstract.tex`）を編集
+   - 論文本体と同様にcommit & push
+   - PR作成時のタイトル: `abstract-1st`
+
+3. **以降の流れ**
+   - 概要の添削・修正を繰り返し
+   - 概要完成後の手順は教員から口頭で説明されます
+
+#### 7.3 submit tag の注意点
+
+- **提出マーク**: submit タグは論文本体の提出版を示します
+- **概要執筆**: submit タグ後、概要執筆に移行
+- **次の段階**: 概要完成後の手順は別途教員から指示されます
 
 ## よくある質問
 

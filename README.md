@@ -172,30 +172,14 @@ def hello_world():
 
 ## 🔍 PDF 生成・確認
 
-### VS Code 内
+### VS Code 内での操作
 
 1. ▷ ボタン（Build LaTeX project）をクリック
 2. 🔍 ボタン（View LaTeX PDF）でプレビュー
 
-### コマンド
-
-#### 卒業論文
-```bash
-# PDF 生成
-latexmk -pv sotsuron.tex
-
-# 概要生成
-latexmk -pv gaiyou.tex
-```
-
-#### 修士論文
-```bash
-# PDF 生成
-latexmk -pv thesis.tex
-
-# 概要生成
-latexmk -pv abstract.tex
-```
+**対象ファイル**:
+- **卒業論文**: `sotsuron.tex`（本体）、`gaiyou.tex`（概要）
+- **修士論文**: `thesis.tex`（本体）、`abstract.tex`（概要）
 
 ## 🆘 困った時は
 
@@ -228,19 +212,34 @@ latexmk -pv abstract.tex
 - **VS Code LaTeX**: [latex-workshop.github.io](https://github.com/James-Yu/LaTeX-Workshop)
 - **textlint**: 日本語校正ツール
 
-## 🎓 提出について
+## 🎓 論文提出について
 
-### 最終提出時
+### 論文提出許可時
 
-1. 最終稿のPRを教員が承認
-2. 自分で最終稿PRをクローズ
-3. 教員からOKが出たら `submit` タグを作成
-4. 印刷版も忘れずに提出
+教員から「論文提出OK」の許可が出たら：
+
+1. **提出版にタグを付与**
+   
+   GitHub Desktop で：
+   - `History` で最新コミットを右クリック
+   - `Create Tag...` をクリック
+   - `Name` に **submit** と入力
+   - `Create Tag` → `Push origin`
+
+2. **概要執筆の開始**
+   - 教員の指示に従って概要 (`gaiyou.tex` または `abstract.tex`) の執筆を開始
+   - `abstract-1st` ブランチから開始（詳細は [WRITING-GUIDE.md](WRITING-GUIDE.md) 参照）
 
 ### 提出形式
 
-- **電子版**: GitHub リポジトリ
+- **電子版**: GitHub リポジトリ（submit タグ版）
 - **印刷版**: 学科規定に従って製本・提出
+
+### 注意点
+
+- **submit タグ**: 論文本体の提出版をマーク
+- **概要執筆**: submit タグ後、教員指示で概要執筆開始
+- **以降の手順**: 概要完成後の手順は教員から口頭で説明されます
 
 ---
 
