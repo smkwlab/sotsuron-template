@@ -8,7 +8,7 @@
 
 **前提条件**: Docker Desktop と GitHub Desktop がインストール済み
 
-**ワンライナーでリポジトリを作成**：
+**スクリプトでリポジトリを作成**：
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 ```
