@@ -8,9 +8,24 @@
 
 Git の詳しい知識は必要ありません。GitHub Desktop の操作だけで論文執筆を完了できます。
 
-## 前提条件
+## 前提条件・初期設定
 
-[README.md](README.md) の手順でリポジトリ作成済みであること。
+### リポジトリの作成（未作成の場合）
+
+**前提条件**: Docker Desktop と GitHub Desktop がインストール済み
+
+**スクリプトでリポジトリを作成**：
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+```
+
+**実行手順**：
+1. 上記コマンドを実行
+2. GitHub認証：ワンタイムコードをブラウザで入力
+3. 学籍番号を入力
+4. 自動でリポジトリ作成・セットアップ完了
+
+### 自動設定される内容
 
 リポジトリ作成時に以下が自動設定されています：
 - **論文タイプ別ファイル調整**（卒論生には卒論用、修論生には修論用ファイルのみ配置）
