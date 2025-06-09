@@ -4,22 +4,34 @@
 
 ## 🎯 学生向けクイックスタート
 
-### 1. このテンプレートを使用開始
+### 1. リポジトリの作成
 
-教員からリポジトリのURLが通知されたら：
+**前提条件**: Docker Desktop と GitHub Desktop がインストール済み
 
-1. **GitHub Desktop をインストール**
-   - [GitHub Desktop](https://desktop.github.com/) をダウンロード・インストール
+**ワンライナーでリポジトリを作成**：
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+```
 
-2. **リポジトリをクローン**
-   - 通知されたURLにアクセス
+**実行手順**：
+1. 上記コマンドを実行
+2. GitHub認証：ワンタイムコードをブラウザで入力
+3. 学籍番号を入力
+4. 自動でリポジトリ作成・セットアップ完了
+
+### 2. 論文執筆の開始
+
+作成されたリポジトリで執筆を開始：
+
+1. **GitHub Desktop でリポジトリをクローン**
+   - 作成されたリポジトリのURLにアクセス
    - `Code` → `Open with GitHub Desktop` をクリック
 
-3. **VS Code で開く**
+2. **VS Code で開く**
    - GitHub Desktop で `Open in Visual Studio Code` をクリック
    - LaTeX Workshop 拡張機能が自動的に利用可能
 
-### 2. 論文執筆の流れ
+### 3. 論文執筆の流れ
 
 ```
 0th-draft: 目次案作成・提出
@@ -35,7 +47,7 @@ abstract-1st: 概要執筆・提出
 
 **重要**: PRは添削用のみです。教員はPRをマージしません。添削対応完了後は**自分でPRをクローズ**します。
 
-### 3. 詳細な操作手順
+### 4. 詳細な操作手順
 
 **詳細な執筆ガイド**: [WRITING-GUIDE.md](WRITING-GUIDE.md)
 - GitHub Desktop の詳細操作
