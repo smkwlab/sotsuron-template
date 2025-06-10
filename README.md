@@ -31,6 +31,10 @@
    - GitHub Desktop で `Open in Visual Studio Code` をクリック
    - LaTeX Workshop 拡張機能が自動的に利用可能
 
+3. **0th-draft ブランチに切り替え**
+   - GitHub Desktop で `Current Branch` → `0th-draft` を選択
+   - 以降も、提出後は自動で作成されるブランチ（1st-draft等）を選択
+
 ### 3. 論文執筆の流れ
 
 ```
