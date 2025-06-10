@@ -1,0 +1,70 @@
+name: Auto Final Merge
+on:
+  push:
+    tags:
+      - 'final-*'
+
+jobs:
+  auto-merge-to-main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Find approved PR for this branch
+        id: find-pr
+        run: |
+          # タグが付いたブランチを特定
+          TAG_COMMIT=$(git rev-parse HEAD)
+          BRANCH_NAME=$(git branch -r --contains $TAG_COMMIT | grep -v HEAD | head -1 | sed 's/origin\///' | xargs)
+          
+          if [ -z "$BRANCH_NAME" ]; then
+            echo "❌ Cannot determine branch for this tag"
+            exit 1
+          fi
+          
+          echo "🔍 Checking for approved PR from branch: $BRANCH_NAME"
+          
+          # そのブランチから main への承認済みPRを検索
+          PR_NUMBER=$(gh pr list --state open --base main --head "$BRANCH_NAME" --json number,reviews --jq '.[] | select(.reviews | map(.state) | contains(["APPROVED"])) | .number')
+          
+          if [ -n "$PR_NUMBER" ]; then
+            echo "approved_pr=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "✅ Found approved PR #$PR_NUMBER from branch $BRANCH_NAME"
+          else
+            echo "❌ No approved PR found for branch $BRANCH_NAME"
+            echo "Please ensure:"
+            echo "1. PR from $BRANCH_NAME to main exists"
+            echo "2. PR has been approved by faculty"
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Auto merge approved PR
+        run: |
+          PR_NUMBER=${{ steps.find-pr.outputs.approved_pr }}
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          
+          # PRを自動マージ
+          gh pr merge $PR_NUMBER --merge --delete-branch
+          
+          echo "✅ Automatically merged PR #$PR_NUMBER to main"
+          echo "🎓 Final submission complete with tag: $TAG_NAME"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create release
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          gh release create $TAG_NAME --title "Final Submission: $TAG_NAME" --notes "🎓 Automatically created for final submission
+
+Tag: \`$TAG_NAME\`
+Date: $(date)
+Status: Merged to main branch
+
+This release represents the final submitted version of the thesis." --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
