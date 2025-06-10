@@ -25,10 +25,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Check if initial-empty branch exists
-        id: check-initial-empty
+      - name: Check if initial branch exists
+        id: check-initial
         run: |
-          if git show-ref --verify --quiet refs/remotes/origin/initial-empty; then
+          if git show-ref --verify --quiet refs/remotes/origin/initial; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
@@ -43,19 +43,19 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Create initial-empty branch if not exists
-        if: steps.check-initial-empty.outputs.exists == 'false'
+      - name: Create initial branch if not exists
+        if: steps.check-initial.outputs.exists == 'false'
         run: |
-          echo "Creating initial-empty branch from first commit"
+          echo "Creating initial branch from first commit"
           FIRST_COMMIT=$(git rev-list --max-parents=0 HEAD)
-          git checkout -b initial-empty $FIRST_COMMIT
-          git push origin initial-empty
+          git checkout -b initial $FIRST_COMMIT
+          git push origin initial
 
       - name: Create review-branch if not exists
         if: steps.check-review-branch.outputs.exists == 'false'
         run: |
-          echo "Creating review-branch based on initial-empty"
-          git checkout initial-empty
+          echo "Creating review-branch based on initial"
+          git checkout initial
           git checkout -b review-branch
           git commit --allow-empty -m "Initial review branch for thesis comments"
           git push origin review-branch
@@ -140,12 +140,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_EXISTS=$(gh pr list --head review-branch --base initial-empty --json number --jq length)
+          PR_EXISTS=$(gh pr list --head review-branch --base initial --json number --jq length)
           
           if [ "$PR_EXISTS" -eq 0 ]; then
             echo "Creating review PR"
             gh pr create \
-              --base initial-empty \
+              --base initial \
               --head review-branch \
               --title "【レビュー用】論文全体へのコメント" \
               --label "do-not-merge" \
@@ -162,7 +162,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          REVIEW_PR_URL=$(gh pr list --head review-branch --base initial-empty --json url --jq '.[0].url')
+          REVIEW_PR_URL=$(gh pr list --head review-branch --base initial --json url --jq '.[0].url')
           
           if [ -n "$REVIEW_PR_URL" ] && [ "$REVIEW_PR_URL" != "null" ]; then
             gh pr comment ${{ github.event.pull_request.number }} \
