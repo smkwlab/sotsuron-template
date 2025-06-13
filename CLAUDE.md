@@ -1,94 +1,328 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with the sotsuron-template repository.
 
 ## Repository Overview
 
-This is a unified LaTeX thesis template for Kyushu Sangyo University's Faculty of Science and Engineering, Information Science Department. It supports both undergraduate (卒業論文) and graduate (修士論文) theses with automated GitHub-based review workflow.
+This is the **unified thesis template** for Kyushu Sangyo University, supporting both undergraduate (卒業論文) and graduate (修士論文) theses. It provides a comprehensive LaTeX template with automated workflows, review systems, and integration with the thesis-environment ecosystem. Students use this template to create their individual thesis repositories through automated tools.
 
 ## Key Commands
 
 ### LaTeX Compilation
 ```bash
-# Undergraduate thesis
-latexmk -pv sotsuron.tex    # Main thesis document
-latexmk -pv gaiyou.tex      # Abstract document
+# Undergraduate thesis compilation
+latexmk -pv sotsuron.tex      # Main thesis document
+latexmk -pv gaiyou.tex        # Abstract (概要)
 
-# Graduate thesis  
-latexmk -pv thesis.tex      # Main thesis document
-latexmk -pv abstract.tex    # Abstract document
+# Graduate thesis compilation  
+latexmk -pv thesis.tex        # Main thesis document
+latexmk -pv abstract.tex      # Abstract
+
+# Cleanup commands
+latexmk -c                    # Clean auxiliary files
+latexmk -C                    # Clean all generated files including PDF
+
+# Direct compilation (if needed)
+platex sotsuron.tex           # Undergraduate main document
+platex thesis.tex             # Graduate main document
+pbibtex sotsuron              # Bibliography for undergraduate
+pbibtex thesis                # Bibliography for graduate
 ```
 
-### Text Linting
+### Text Quality Checking
 ```bash
-# Japanese text linting (if textlint is available)
-textlint sotsuron.tex
-textlint thesis.tex
+# textlint for Japanese academic writing
+textlint *.tex                # Check all .tex files
+textlint --fix *.tex          # Auto-fix issues where possible
+textlint sotsuron.tex         # Check specific file
+
+# Example file checking
+textlint example.tex          # Check example content
+textlint example-gaiyou.tex   # Check example abstract
 ```
 
-## File Architecture
+### Development Commands
+```bash
+# Test with different engines
+latexmk -pdf sotsuron.tex     # Force PDF mode
+latexmk -dvi sotsuron.tex     # Force DVI mode
 
-### Core Template Structure
-- **Unified Template**: Single template supports both undergraduate and graduate theses
-- **Conditional Files**: Student repositories are created with only relevant files based on student ID patterns
-- **Automated Workflow**: GitHub Actions handle branch creation and review management
+# Bibliography testing
+pbibtex sotsuron && latexmk sotsuron.tex  # Manual bib processing
+```
 
-### File Types by Thesis Level
-#### Undergraduate (Student ID: k??rs???)
+## Architecture
+
+### Template Structure
+The repository supports both thesis types with smart file organization:
+
+**Undergraduate (卒業論文) files:**
 - `sotsuron.tex` - Main thesis document
-- `gaiyou.tex` - Abstract document
-- `example.tex`, `example-gaiyou.tex` - Reference examples
+- `gaiyou.tex` - Abstract in Japanese
+- `example.tex` - Example content for reference
+- `example-gaiyou.tex` - Example abstract
 
-#### Graduate (Student ID: k??gjk??)
-- `thesis.tex` - Main thesis document
-- `abstract.tex` - Abstract document
+**Graduate (修士論文) files:**
+- `thesis.tex` - Main thesis document  
+- `abstract.tex` - Abstract (English or Japanese)
+
+**Shared files:**
+- `plistings.sty` - Programming code formatting
+- `.latexmkrc` - LaTeX compilation configuration
+- `.textlintrc` - Japanese writing quality rules
+
+### Student Repository Creation
+Students create individual repositories using automated Docker-based tools:
+
+```bash
+# Self-service repository creation (zero dependencies)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+
+# With student ID for automatic thesis type detection
+STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+```
+
+### Automated File Cleanup
+Based on student ID patterns:
+- **k??rs???** (undergraduate): Keeps `sotsuron.tex`, `gaiyou.tex`, `example*.tex`
+- **k??gjk??** (graduate): Keeps `thesis.tex`, `abstract.tex` only
+
+### Review Workflow System
+Sophisticated GitHub Actions-based supervision system:
+
+**Branching Strategy:**
+- Sequential draft branches: `0th-draft` → `1st-draft` → `2nd-draft` → ...
+- Persistent `review-branch` for holistic feedback
+- Base `initial` branch for clean diff tracking
+
+**Faculty Review Features:**
+- Individual draft PRs for incremental changes
+- Comprehensive review PR showing entire thesis
+- GitHub suggestions for direct edits
+- Automated branch creation for next drafts
+
+## File Structure Conventions
+
+### Template Files
+```
+├── sotsuron.tex              # Undergraduate main document
+├── thesis.tex                # Graduate main document
+├── gaiyou.tex                # Undergraduate abstract
+├── abstract.tex              # Graduate abstract
+├── example.tex               # Example undergraduate content
+├── example-gaiyou.tex        # Example undergraduate abstract
+└── plistings.sty             # Code formatting style
+```
 
 ### Configuration Files
-- `.latexmkrc` - LaTeX compilation settings (uplatex, dvipdfmx)
-- `.textlintrc` - Japanese academic writing linting rules
-- `plistings.sty` - Programming code formatting package
+```
+├── .latexmkrc                # LaTeX build configuration
+├── .textlintrc               # Japanese writing rules
+├── .devcontainer/            # VSCode container setup
+└── .github/workflows/        # Student workflow automation
+```
 
-## Development Environment
-
-### DevContainer Integration
-The template includes automatic LaTeX environment setup:
-- Pre-configured VS Code with LaTeX Workshop extension
-- TeX Live distribution with Japanese support
-- textlint for Japanese academic writing standards
-- Automatic dependency management
-
-### LaTeX Engine Configuration
-- **Engine**: uplatex (Unicode-enabled pLaTeX)
-- **Bibliography**: upbibtex
-- **PDF Generation**: dvipdfmx
-- **Index**: mendex with Unicode support
-- **SyncTeX**: Enabled for editor integration
-
-## Branching Workflow
-
-### Branch Naming Convention
-- Draft branches: `0th-draft`, `1st-draft`, `2nd-draft`, etc.
-- Abstract branches: `abstract-1st`, `abstract-2nd`, etc.
-- Review branch: `review-branch` (persistent, auto-updated)
-- Base branch: `initial` (for diff tracking)
-
-### Automated Branch Management
-- Next draft branch auto-created upon PR submission
-- Review branch continuously updated with latest content
-- Students work on sequential drafts with clear diff tracking
-- Parallel execution: next draft can begin while previous is under review
+### Development Files (not in student repos)
+```
+├── CLAUDE.md                 # This file (development only)
+├── README.md                 # Template documentation
+├── WRITING-GUIDE.md          # Academic writing guidance
+└── .github/workflows/        # Template management workflows
+```
 
 ## Important Conventions
 
-### Student Repository Creation Process
-1. Template repository provides unified base
-2. Student-specific repository created with appropriate files only
-3. Unused template files automatically removed based on student ID pattern
-4. DevContainer environment added via aldc script
-5. Initial workflow branches and persistent review PR established
+### Student ID Pattern Recognition
+The system automatically detects thesis type:
 
-### Review System Architecture
-- **Differential Review**: Each draft PR shows changes from previous version
-- **Comprehensive Review**: review-branch PR shows entire thesis content
-- **Non-merge Workflow**: PRs are for review only, students close after addressing feedback
-- **Suggestion Integration**: GitHub's suggestion feature for direct editorial input
+**Undergraduate patterns:**
+- `k??rs???` (e.g., k21rs001, k23rs099)
+- Receives: `sotsuron.tex`, `gaiyou.tex`, examples
+
+**Graduate patterns:**  
+- `k??gjk??` (e.g., k21gjk01, k23gjk15)
+- Receives: `thesis.tex`, `abstract.tex` only
+
+### Document Structure Standards
+**Undergraduate thesis (sotsuron.tex):**
+- Introduction (はじめに)
+- Literature Review (関連研究)
+- Methodology (提案手法)
+- Experiments (実験)
+- Discussion (考察)
+- Conclusion (おわりに)
+
+**Graduate thesis (thesis.tex):**
+- More comprehensive structure
+- Research background
+- Detailed methodology
+- Extensive experiments
+- Academic contributions
+
+### Japanese Academic Writing
+- **Encoding**: UTF-8 throughout
+- **Style**: Academic dearu-調 (断定調)
+- **Length**: Undergraduate ~20-30 pages, Graduate ~40-60 pages
+- **Citations**: Academic format with proper bibliography
+
+## Development Workflow
+
+### For Template Improvements
+1. **Test changes** with both undergraduate and graduate examples
+2. **Verify compatibility** with both thesis types
+3. **Update documentation** (README.md, WRITING-GUIDE.md)
+4. **Test automated repository creation**
+5. **Coordinate with thesis-management-tools** for deployment
+
+### For Document Examples
+1. **Maintain realistic examples** reflecting actual thesis content
+2. **Keep examples current** with latest academic standards
+3. **Test compilation** with all supported LaTeX engines
+4. **Validate textlint rules** against examples
+
+### For Workflow Integration
+1. **Test review branch system** with sample content
+2. **Verify GitHub Actions** functionality
+3. **Validate student repository creation**
+4. **Test faculty review workflows**
+
+## Student Workflow (for reference)
+
+### Phase 1: Thesis Writing
+```
+0th-draft (outline) → 1st-draft → 2nd-draft → ... → submit tag
+```
+
+### Phase 2: Abstract Writing
+```
+abstract-1st → abstract-2nd → abstract completion
+```
+
+### Phase 3: Final Submission
+```
+Further improvements → Final PR → Faculty approval → final-* tag → Auto-merge to main
+```
+
+### Branch Management for Students
+- **Work branches**: Students create drafts in sequence
+- **Review branch**: Automatically updated with latest content
+- **Faculty feedback**: Provided via GitHub PR comments and suggestions
+- **History tracking**: Complete revision history maintained
+
+## Testing Guidelines
+
+### Template Testing
+```bash
+# Test undergraduate compilation
+latexmk -pv sotsuron.tex
+latexmk -pv gaiyou.tex
+
+# Test graduate compilation
+latexmk -pv thesis.tex  
+latexmk -pv abstract.tex
+
+# Test examples
+latexmk -pv example.tex
+latexmk -pv example-gaiyou.tex
+```
+
+### Quality Assurance
+```bash
+# Check Japanese writing quality
+textlint sotsuron.tex thesis.tex
+textlint example*.tex
+
+# Validate LaTeX syntax
+chktex sotsuron.tex
+chktex thesis.tex
+
+# Test with different engines
+latexmk -pdfdvi sotsuron.tex    # platex workflow
+latexmk -pdf sotsuron.tex       # pdflatex workflow (if supported)
+```
+
+### Integration Testing
+- Test repository creation with sample student IDs
+- Verify file cleanup for both thesis types
+- Test devcontainer functionality
+- Validate GitHub Actions workflows
+
+## Troubleshooting
+
+### Common Issues
+
+**Compilation errors:**
+- Check file encoding (must be UTF-8)
+- Verify Japanese font availability
+- Test with minimal document first
+- Check .latexmkrc configuration
+
+**textlint issues:**
+- Validate .textlintrc syntax
+- Check rule compatibility with content
+- Test with example files
+- Update textlint rules if needed
+
+**Repository creation problems:**
+- Verify student ID format
+- Check Docker availability
+- Test with debug mode: `DEBUG=1`
+- Validate GitHub authentication
+
+### Debug Commands
+```bash
+# Check LaTeX installation
+kpsewhich jarticle.cls          # Japanese article class
+kpsewhich plistings.sty         # Custom style file
+
+# Test Japanese processing
+echo "日本語テスト" | platex     # Basic Japanese test
+
+# Check textlint configuration  
+npx textlint --print-config     # Show active rules
+```
+
+## Ecosystem Integration
+
+### Related Repositories
+- **latex-environment**: Development container base
+- **thesis-management-tools**: Student repository creation and management
+- **latex-release-action**: Automated PDF generation
+- **texlive-ja-textlint**: Base Docker image for compilation
+
+### Version Dependencies
+- Uses `latex-environment:release` for development container
+- Integrates with `thesis-management-tools` for student onboarding
+- Compatible with `latex-release-action@v2.2.0` for CI/CD
+
+### Faculty Tools Integration
+- Review workflows in `thesis-management-tools`
+- Automated supervision via GitHub Actions
+- Progress tracking and deadline management
+- Quality assurance through automated checks
+
+## Contributing Guidelines
+
+### Template Content
+- Maintain realistic academic examples
+- Ensure compatibility with both thesis types
+- Follow Japanese academic writing standards
+- Test extensively before deployment
+
+### Documentation
+- Keep WRITING-GUIDE.md current with academic standards
+- Update README.md for user-facing changes
+- Document breaking changes clearly
+- Maintain example consistency
+
+### Quality Standards
+- All LaTeX code must compile without errors
+- textlint rules must pass on all example content
+- Support both undergraduate and graduate requirements
+- Maintain clean, professional output
+
+### Review Process
+- Test with sample student repositories
+- Verify automated workflows
+- Check integration with ecosystem tools
+- Validate faculty review functionality
