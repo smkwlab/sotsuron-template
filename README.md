@@ -6,7 +6,7 @@
 
 ### 1. リポジトリの作成
 
-**前提条件**: Docker Desktop と GitHub Desktop がインストール済み
+**前提条件**: Docker Desktop と GitHub Desktop がインストール済み。
 
 **スクリプトでリポジトリを作成**：
 ```bash
@@ -21,7 +21,7 @@
 
 ### 2. 論文執筆の開始
 
-作成されたリポジトリで執筆を開始：
+作成されたリポジトリで執筆を開始する。
 
 1. **GitHub Desktop でリポジトリをクローン**
    - 作成されたリポジトリのURLにアクセス
@@ -88,7 +88,7 @@ abstract-1st: 概要執筆・提出
 
 ### 自動設定（推奨）
 
-リポジトリには **devcontainer** が設定済みです：
+リポジトリには **devcontainer** が設定済みである。
 
 - VS Code で開くと自動的に LaTeX 環境が利用可能
 - LaTeX Workshop 拡張機能
@@ -97,7 +97,7 @@ abstract-1st: 概要執筆・提出
 
 ### 手動設定
 
-独自環境を使用する場合：
+独自環境を使用する場合は以下が必要である。
 
 - **LaTeX**: TeX Live（最新版推奨）
 - **エディタ**: VS Code + LaTeX Workshop拡張機能
@@ -220,7 +220,7 @@ def hello_world():
 
 ### 論文提出許可時
 
-教員から「論文提出OK」の許可が出たら：
+教員から「論文提出OK」の許可が出たら以下を実行する。
 
 1. **提出版にタグを付与**
    
@@ -250,4 +250,4 @@ def hello_world():
 **関連リポジトリ**:
 - [thesis-management-tools](https://github.com/smkwlab/thesis-management-tools) - 詳細ガイド・教員向けツール
 
-**質問・サポート**: smkwlabML または担当教員まで
+**質問・サポート**: smkwlabML または担当教員まで。
