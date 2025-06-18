@@ -1,3 +1,4 @@
+---
 name: Update Review Branch
 
 on:
@@ -10,9 +11,9 @@ on:
 jobs:
   update-review-branch:
     runs-on: ubuntu-latest
-    
+
     if: github.head_ref != 'review-branch'
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -63,17 +64,17 @@ jobs:
       - name: Update review-branch with latest PR content
         run: |
           echo "Updating review-branch with content from ${{ github.head_ref }}"
-          
+
           git fetch origin
-          
+
           git checkout review-branch
           git pull origin review-branch
-          
+
           # 概要マージ用の関数を定義
           merge_latest_abstract() {
             if [[ "${{ github.head_ref }}" =~ -draft$ ]]; then
               echo "Draft branch detected. Looking for latest abstract..."
-              
+
               # 最新のabstractブランチを検索（20thから逆順で探す）
               LATEST_ABSTRACT=""
               for i in {20..1}; do
@@ -83,19 +84,19 @@ jobs:
                   3|23) SUFFIX="rd" ;;
                   *) SUFFIX="th" ;;
                 esac
-                
+
                 ABSTRACT_BRANCH="abstract-${i}${SUFFIX}"
                 if git show-ref --verify --quiet "refs/remotes/origin/$ABSTRACT_BRANCH"; then
                   LATEST_ABSTRACT="$ABSTRACT_BRANCH"
                   break
                 fi
               done
-              
+
               # 最新のabstractが見つかった場合は概要ファイルをマージ
               if [ -n "$LATEST_ABSTRACT" ]; then
                 echo "Found latest abstract: $LATEST_ABSTRACT"
                 echo "Merging gaiyou.tex from $LATEST_ABSTRACT"
-                
+
                 # gaiyou.texのみを最新のabstractから取得
                 if git show "origin/$LATEST_ABSTRACT:gaiyou.tex" > /dev/null 2>&1; then
                   git checkout "origin/$LATEST_ABSTRACT" -- gaiyou.tex
@@ -110,17 +111,17 @@ jobs:
               fi
             fi
           }
-          
+
           if git merge origin/${{ github.head_ref }} --no-edit; then
             echo "✓ Merge successful"
             merge_latest_abstract
             git push origin review-branch
             echo "✓ Review branch updated successfully"
-            
+
           else
             echo "⚠ Merge conflict occurred, using strategy to prefer PR content"
             git merge --abort
-            
+
             if git merge origin/${{ github.head_ref }} -X theirs --no-edit; then
               echo "✓ Merge successful with theirs strategy"
               merge_latest_abstract
@@ -141,7 +142,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_EXISTS=$(gh pr list --head review-branch --base initial --json number --jq length)
-          
+
           if [ "$PR_EXISTS" -eq 0 ]; then
             echo "Creating review PR"
             gh pr create \
@@ -150,9 +151,9 @@ jobs:
               --title "【レビュー用】論文全体へのコメント" \
               --label "do-not-merge" \
               --body "このPRは論文全体への添削コメント用です。詳細は作成後に確認してください。"
-            
+
             gh label create "do-not-merge" --color "d73a4a" --description "このPRはマージしないでください" || true
-            
+
           else
             echo "Review PR already exists, it has been updated automatically"
           fi
@@ -163,12 +164,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           REVIEW_PR_URL=$(gh pr list --head review-branch --base initial --json url --jq '.[0].url')
-          
+
           if [ -n "$REVIEW_PR_URL" ] && [ "$REVIEW_PR_URL" != "null" ]; then
             gh pr comment ${{ github.event.pull_request.number }} \
               --body "✅ レビュー用PRが自動更新されました: $REVIEW_PR_URL"
           fi
-          
+
       - name: Add error comment to PR
         if: github.event_name == 'pull_request' && failure()
         env:
