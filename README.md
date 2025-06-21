@@ -27,9 +27,6 @@
 ```bash
 # アカウント切り替え
 gh auth switch --user your-username
-
-# または個人アカウントに作成
-TARGET_ORG=your-username /bin/bash -c "$(curl -fsSL ...)"
 ```
 
 ### 2. 論文執筆の開始
