@@ -14,10 +14,23 @@
 ```
 
 **実行手順**：
-1. 上記コマンドを実行
-2. GitHub認証：ワンタイムコードをブラウザで入力
+1. **GitHub CLI がある場合**：
+   - 事前に `gh auth login` でGitHubにログイン
+   - 上記コマンドを実行（自動認証）
+2. **GitHub CLI がない場合**：
+   - 上記コマンドを実行
+   - GitHub認証：ワンタイムコードをブラウザで入力
 3. 学籍番号を入力
 4. 自動でリポジトリ作成・セットアップ完了
+
+**複数GitHubアカウントがある場合**：
+```bash
+# アカウント切り替え
+gh auth switch --user your-username
+
+# または個人アカウントに作成
+TARGET_ORG=your-username /bin/bash -c "$(curl -fsSL ...)"
+```
 
 ### 2. 論文執筆の開始
 
