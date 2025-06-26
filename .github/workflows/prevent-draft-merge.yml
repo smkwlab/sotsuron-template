@@ -1,0 +1,56 @@
+name: Prevent Draft Branch Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - review-branch
+
+jobs:
+  check-draft-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if branch is draft
+        id: check-draft
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          echo "Branch name: $BRANCH_NAME"
+          
+          # draft系ブランチのパターンチェック
+          if [[ "$BRANCH_NAME" =~ ^[0-9]+(st|nd|rd|th)-draft$ ]] || \
+             [[ "$BRANCH_NAME" =~ ^abstract-[0-9]+(st|nd|rd|th)$ ]] || \
+             [[ "$BRANCH_NAME" =~ ^gaiyou-[0-9]+(st|nd|rd|th)$ ]]; then
+            echo "is_draft=true" >> $GITHUB_OUTPUT
+            echo "draft_type=main" >> $GITHUB_OUTPUT
+          elif [[ "$BRANCH_NAME" =~ ^0th-draft$ ]]; then
+            echo "is_draft=true" >> $GITHUB_OUTPUT  
+            echo "draft_type=initial" >> $GITHUB_OUTPUT
+          else
+            echo "is_draft=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Block draft branch merge
+        if: steps.check-draft.outputs.is_draft == 'true'
+        run: |
+          echo "::error::❌ 添削用ブランチはマージ禁止です"
+          echo "::error::📝 ブランチ名: ${{ github.head_ref }}"
+          echo "::error::🎯 このPRは教員による添削・レビュー用です"
+          echo "::error::✅ 学生：レビュー対応完了後にPRをクローズしてください"
+          echo "::error::👨‍🏫 教員：レビューのみ実施し、マージは行わないでください"
+          
+          if [[ "${{ steps.check-draft.outputs.draft_type }}" == "initial" ]]; then
+            echo "::error::ℹ️  初期提出用ブランチです（0th-draft）"
+          else
+            echo "::error::ℹ️  添削依頼用ブランチです"
+          fi
+          
+          echo ""
+          echo "::notice::📖 詳細な論文執筆フローについては README.md をご確認ください"
+          exit 1
+
+      - name: Success - Non-draft branch
+        if: steps.check-draft.outputs.is_draft == 'false'
+        run: |
+          echo "✅ 通常のブランチです - マージ可能"
+          echo "📝 ブランチ名: ${{ github.head_ref }}"
