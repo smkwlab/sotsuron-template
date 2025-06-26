@@ -11,11 +11,24 @@ jobs:
   check-draft-branch:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
       - name: Check if branch is draft
         id: check-draft
         run: |
           BRANCH_NAME="${{ github.head_ref }}"
           echo "Branch name: $BRANCH_NAME"
+          
+          # final-* タグが付いているかチェック（最終提出フロー）
+          if git tag --points-at HEAD | grep -q "^final-"; then
+            echo "is_draft=false" >> $GITHUB_OUTPUT
+            echo "is_final_submission=true" >> $GITHUB_OUTPUT
+            echo "✅ Final submission detected - merge allowed"
+            exit 0
+          fi
           
           # draft系ブランチのパターンチェック
           if [[ "$BRANCH_NAME" =~ ^[0-9]+(st|nd|rd|th)-draft$ ]] || \
