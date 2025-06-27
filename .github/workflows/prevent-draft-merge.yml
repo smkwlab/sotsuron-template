@@ -1,0 +1,149 @@
+name: Prevent Draft Branch Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - review-branch
+
+jobs:
+  check-draft-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Check if branch is draft
+        id: check-draft
+        run: |
+          set -e  # エラー時に即座に停止
+          
+          BRANCH_NAME="${{ github.head_ref }}"
+          echo "::debug::Starting branch analysis"
+          echo "::debug::Branch name: $BRANCH_NAME"
+          echo "::debug::Current HEAD: $(git rev-parse HEAD)"
+          
+          # Git リポジトリ状態確認
+          if ! git rev-parse --git-dir >/dev/null 2>&1; then
+            echo "::error::Git repository not found"
+            exit 1
+          fi
+          
+          # final-* タグチェック（エラーハンドリング強化）
+          echo "::debug::Checking for final-* tags..."
+          TAGS_AT_HEAD=""
+          if TAGS_AT_HEAD=$(git tag --points-at HEAD 2>/dev/null); then
+            echo "::debug::Tags at HEAD: ${TAGS_AT_HEAD:-'none'}"
+            
+            if echo "$TAGS_AT_HEAD" | grep -q "^final-"; then
+              FINAL_TAG=$(echo "$TAGS_AT_HEAD" | grep "^final-" | head -1)
+              echo "is_draft=false" >> $GITHUB_OUTPUT
+              echo "is_final_submission=true" >> $GITHUB_OUTPUT
+              echo "final_tag=$FINAL_TAG" >> $GITHUB_OUTPUT
+              echo "✅ Final submission detected - merge allowed"
+              echo "::notice::Final submission tag: $FINAL_TAG"
+              exit 0
+            fi
+          else
+            echo "::debug::No tags found at HEAD (this is normal for draft branches)"
+          fi
+          
+          # ブランチ名検証（特殊文字対応）
+          if [[ -z "$BRANCH_NAME" ]]; then
+            echo "::error::Branch name is empty"
+            exit 1
+          fi
+          
+          # draft系ブランチのパターンチェック（改良版）
+          echo "::debug::Checking draft branch patterns..."
+          
+          # メイン添削ブランチ（1st-draft, 2nd-draft等）
+          if [[ "$BRANCH_NAME" =~ ^[0-9]+(st|nd|rd|th)-draft$ ]]; then
+            echo "::debug::Matched main draft pattern: $BRANCH_NAME"
+            echo "is_draft=true" >> $GITHUB_OUTPUT
+            echo "draft_type=main" >> $GITHUB_OUTPUT
+          # 概要添削ブランチ（abstract-1st, gaiyou-1st等）
+          elif [[ "$BRANCH_NAME" =~ ^(abstract|gaiyou)-[0-9]+(st|nd|rd|th)$ ]]; then
+            echo "::debug::Matched abstract draft pattern: $BRANCH_NAME"
+            echo "is_draft=true" >> $GITHUB_OUTPUT
+            echo "draft_type=abstract" >> $GITHUB_OUTPUT
+          # 初期提出ブランチ（0th-draft）
+          elif [[ "$BRANCH_NAME" =~ ^0th-draft$ ]]; then
+            echo "::debug::Matched initial draft pattern: $BRANCH_NAME"
+            echo "is_draft=true" >> $GITHUB_OUTPUT  
+            echo "draft_type=initial" >> $GITHUB_OUTPUT
+          # 通常ブランチ
+          else
+            echo "::debug::No draft pattern matched - regular branch"
+            echo "is_draft=false" >> $GITHUB_OUTPUT
+            echo "draft_type=none" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "::debug::Branch analysis completed"
+
+      - name: Block draft branch merge
+        if: steps.check-draft.outputs.is_draft == 'true'
+        run: |
+          DRAFT_TYPE="${{ steps.check-draft.outputs.draft_type }}"
+          BRANCH_NAME="${{ github.head_ref }}"
+          
+          echo "::error::❌ 添削用ブランチはマージ禁止です"
+          echo "::error::📝 ブランチ名: $BRANCH_NAME"
+          echo "::error::🎯 このPRは教員による添削・レビュー用です"
+          
+          # ブランチタイプ別の詳細説明
+          case "$DRAFT_TYPE" in
+            "initial")
+              echo "::error::ℹ️  初期提出用ブランチです（0th-draft）"
+              echo "::error::📋 目的：初回の論文アウトライン・構成確認"
+              ;;
+            "main")
+              echo "::error::ℹ️  本文添削用ブランチです（1st-draft, 2nd-draft等）"
+              echo "::error::📋 目的：論文本文の段階的改善・品質向上"
+              ;;
+            "abstract")
+              echo "::error::ℹ️  概要添削用ブランチです（abstract-1st, gaiyou-1st等）"
+              echo "::error::📋 目的：論文概要の改善・完成度向上"
+              ;;
+            *)
+              echo "::error::ℹ️  添削依頼用ブランチです"
+              ;;
+          esac
+          
+          echo "::error::📍 正しいワークフロー："
+          echo "::error::  1️⃣ 学生：PR作成・提出"
+          echo "::error::  2️⃣ 教員：レビュー・フィードバック提供"
+          echo "::error::  3️⃣ 学生：フィードバック対応・修正"
+          echo "::error::  4️⃣ 学生：対応完了後にPRをクローズ"
+          echo "::error::  5️⃣ 学生：次の執筆ステップに進む"
+          
+          echo ""
+          echo "::notice::👨‍🎓 学生の方：レビュー対応完了後にPRをクローズしてください"
+          echo "::notice::👨‍🏫 教員の方：レビューのみ実施し、マージは行わないでください"
+          echo "::notice::📖 詳細：README.md の論文執筆フローをご確認ください"
+          
+          echo "::debug::Branch type: $DRAFT_TYPE, Action: Block merge"
+          exit 1
+
+      - name: Success - Non-draft branch
+        if: steps.check-draft.outputs.is_draft == 'false'
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          IS_FINAL="${{ steps.check-draft.outputs.is_final_submission }}"
+          
+          if [[ "$IS_FINAL" == "true" ]]; then
+            FINAL_TAG="${{ steps.check-draft.outputs.final_tag }}"
+            echo "🎓 最終提出ブランチです - マージ許可"
+            echo "📝 ブランチ名: $BRANCH_NAME"
+            echo "🏷️  最終提出タグ: $FINAL_TAG"
+            echo "::notice::最終提出フローが正常に動作しています"
+          else
+            echo "✅ 通常のブランチです - マージ可能"
+            echo "📝 ブランチ名: $BRANCH_NAME"
+            echo "::notice::通常のブランチのため、マージ制限はありません"
+          fi
+          
+          echo "::debug::Branch check passed - merge allowed"
