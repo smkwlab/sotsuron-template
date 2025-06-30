@@ -11,7 +11,7 @@ VS Code devContainer を用いて、LaTeX 処理系、および textlint を内�
 
 **スクリプトでリポジトリを作成**：
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 ```
 
 **実行手順**：
