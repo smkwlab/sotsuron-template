@@ -9,7 +9,7 @@ VS Code devContainer を用いて、LaTeX 処理系、および textlint を内�
 
 **前提条件**: Docker Desktop と GitHub Desktop がインストール済み。
 
-**スクリプトでリポジトリを作成**：
+**スクリプトでリポジトリを作成：**
 ```bash
 DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 ```
