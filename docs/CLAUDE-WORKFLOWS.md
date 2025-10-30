@@ -4,26 +4,40 @@ This document covers workflows and detailed command examples for sotsuron-templa
 
 ## Student Workflow (for reference)
 
+### Simplified Workflow Overview
+
+This template uses a simplified Pull Request-based review system with only two types of branches:
+
+**Branch Structure:**
+- **main**: Base branch and final deliverable
+- **xth-draft**: Sequential draft branches (0th-draft, 1st-draft, 2nd-draft, ...)
+- **abstract-xth**: Abstract/summary branches (abstract-1st, abstract-2nd, ...)
+
 ### Phase 1: Thesis Writing
 ```
-0th-draft (outline) → 1st-draft → 2nd-draft → ... → submit tag
+main ← 0th-draft (outline) → PR → Review → Approval
+main ← 1st-draft → PR → Review → Approval
+main ← 2nd-draft → PR → Review → Approval
+...
 ```
 
 ### Phase 2: Abstract Writing
 ```
-abstract-1st → abstract-2nd → abstract completion
+main ← abstract-1st → PR → Review → Approval
+main ← abstract-2nd → PR → Review → Approval
 ```
 
 ### Phase 3: Final Submission
 ```
-Further improvements → Final PR → Faculty approval → final-* tag → Auto-merge to main
+main ← final-draft → PR → Faculty approval → final-* tag → Auto-merge to main
 ```
 
 ### Branch Management for Students
-- **Work branches**: Students create drafts in sequence
-- **Review branch**: Automatically updated with latest content
-- **Faculty feedback**: Provided via GitHub PR comments and suggestions
-- **History tracking**: Complete revision history maintained
+- **Work branches**: Students create PRs from draft branches directly to main
+- **Faculty feedback**: Provided via GitHub PR comments and suggestions on each draft PR
+- **Next draft**: Automatically created after PR is opened
+- **History tracking**: Complete revision history maintained in main branch
+- **No review-branch**: Simplified structure removes the persistent review branch
 
 ## LaTeX Compilation Examples
 

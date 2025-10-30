@@ -39,18 +39,18 @@ Based on student ID patterns:
 - **k??gjk??** (graduate): Keeps `thesis.tex`, `abstract.tex` only
 
 ### Review Workflow System
-Sophisticated GitHub Actions-based supervision system:
+Simplified GitHub Actions-based supervision system:
 
 **Branching Strategy:**
+- **main**: Base branch and final deliverable
 - Sequential draft branches: `0th-draft` → `1st-draft` → `2nd-draft` → ...
-- Persistent `review-branch` for holistic feedback
-- Base `initial` branch for clean diff tracking
+- Abstract branches: `abstract-1st` → `abstract-2nd` → ...
 
 **Faculty Review Features:**
-- Individual draft PRs for incremental changes
-- Comprehensive review PR showing entire thesis
-- GitHub suggestions for direct edits
-- Automated branch creation for next drafts
+- Individual draft PRs directly to main for each revision
+- GitHub PR comments and suggestions for feedback
+- Automated next draft branch creation after PR opened
+- Final submission via `final-*` tag triggers auto-merge
 
 ## File Structure Conventions
 
