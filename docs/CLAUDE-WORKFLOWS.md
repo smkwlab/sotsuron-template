@@ -1,117 +1,99 @@
-# Workflows and Usage Examples
+# ワークフローと使用例
 
-This document covers workflows and detailed command examples for sotsuron-template.
+このドキュメントでは、sotsuron-template のワークフローと詳細なコマンド例を説明します。
 
-## Student Workflow (for reference)
+## 学生向けワークフロー
 
-### Simplified Workflow Overview
+### ワークフロー概要
 
-This template uses a simplified Pull Request-based review system with only two types of branches:
+このテンプレートは Pull Request ベースのレビューシステムを採用しています。
 
-**Branch Structure:**
-- **main**: Base branch and final deliverable
-- **xth-draft**: Sequential draft branches (0th-draft, 1st-draft, 2nd-draft, ...)
-- **abstract-xth**: Abstract/summary branches (abstract-1st, abstract-2nd, ...)
+**ブランチ構造:**
+- **main**: 基準ブランチおよび最終成果物
+- **xth-draft**: 順次作成するドラフトブランチ（0th-draft, 1st-draft, 2nd-draft, ...）
+- **abstract-xth**: 概要用ブランチ（abstract-1st, abstract-2nd, ...）
 
-### Phase 1: Thesis Writing
+### Phase 1: 論文執筆
 ```
-main ← 0th-draft (outline) → PR → Review → Approval
-main ← 1st-draft → PR → Review → Approval
-main ← 2nd-draft → PR → Review → Approval
+main ← 0th-draft (アウトライン) → PR → レビュー → 承認
+main ← 1st-draft → PR → レビュー → 承認
+main ← 2nd-draft → PR → レビュー → 承認
 ...
 ```
 
-### Phase 2: Abstract Writing
+### Phase 2: 概要執筆
 ```
-main ← abstract-1st → PR → Review → Approval
-main ← abstract-2nd → PR → Review → Approval
-```
-
-### Phase 3: Final Submission
-```
-main ← final-draft → PR → Faculty approval → final-* tag → Auto-merge to main
+main ← abstract-1st → PR → レビュー → 承認
+main ← abstract-2nd → PR → レビュー → 承認
 ```
 
-### Branch Management for Students
-- **Work branches**: Students create PRs from draft branches directly to main
-- **Faculty feedback**: Provided via GitHub PR comments and suggestions on each draft PR
-- **Next draft**: Automatically created after PR is opened
-- **History tracking**: Complete revision history maintained in main branch
-- **No review-branch**: Simplified structure removes the persistent review branch
+### Phase 3: 最終提出
+```
+main ← final-draft → PR → 教員承認 → final-* タグ → 自動マージ
+```
 
-## LaTeX Compilation Examples
+### ブランチ管理
+- **作業ブランチ**: ドラフトブランチから main へ直接 PR を作成
+- **教員フィードバック**: 各ドラフト PR で GitHub のコメントと提案機能を使用
+- **次のドラフト**: PR 作成後に自動的に次のブランチが作成される
+- **履歴管理**: main ブランチで完全な改訂履歴を保持
 
-### Undergraduate Thesis Compilation
+## LaTeX コンパイル例
+
+### 学部生論文のコンパイル
 ```bash
-# Main thesis document
-latexmk -pv sotsuron.tex      # Compile and preview
-latexmk -c                    # Clean auxiliary files
-latexmk -C                    # Clean all generated files including PDF
+# 論文本体
+latexmk -pv sotsuron.tex      # コンパイルとプレビュー
+latexmk -c                    # 補助ファイルを削除
+latexmk -C                    # PDF を含むすべての生成ファイルを削除
 
-# Abstract (概要)
-latexmk -pv gaiyou.tex        # Compile abstract
+# 概要
+latexmk -pv gaiyou.tex        # 概要をコンパイル
 
-# Direct compilation (if needed)
-platex sotsuron.tex           # Main document
-pbibtex sotsuron              # Bibliography
-platex sotsuron.tex           # Second pass
-platex sotsuron.tex           # Final pass
-dvipdfmx sotsuron.dvi        # Convert to PDF
+# 直接コンパイル（必要な場合、.latexmkrc で設定された uplatex を使用）
+uplatex sotsuron.tex          # 本文
+upbibtex sotsuron             # 参考文献
+uplatex sotsuron.tex          # 2回目
+uplatex sotsuron.tex          # 3回目
+dvipdfmx sotsuron.dvi         # PDF に変換
 ```
 
-### Graduate Thesis Compilation
+### 大学院生論文のコンパイル
 ```bash
-# Main thesis document
-latexmk -pv thesis.tex        # Compile and preview
-latexmk -c                    # Clean auxiliary files
-latexmk -C                    # Clean all generated files including PDF
+# 論文本体
+latexmk -pv thesis.tex        # コンパイルとプレビュー
+latexmk -c                    # 補助ファイルを削除
+latexmk -C                    # PDF を含むすべての生成ファイルを削除
 
-# Abstract
-latexmk -pv abstract.tex      # Compile abstract
+# 概要
+latexmk -pv abstract.tex      # 概要をコンパイル
 
-# Direct compilation (if needed)
-platex thesis.tex             # Main document
-pbibtex thesis                # Bibliography
-platex thesis.tex             # Second pass
-platex thesis.tex             # Final pass
-dvipdfmx thesis.dvi          # Convert to PDF
+# 直接コンパイル（必要な場合、.latexmkrc で設定された uplatex を使用）
+uplatex thesis.tex            # 本文
+upbibtex thesis               # 参考文献
+uplatex thesis.tex            # 2回目
+uplatex thesis.tex            # 3回目
+dvipdfmx thesis.dvi           # PDF に変換
 ```
 
-## Text Quality Checking Examples
+## 文章品質チェック例
 
-### Basic textlint Usage
+### 基本的な textlint の使用方法
 ```bash
-# Check all .tex files
-textlint *.tex                
+# すべての .tex ファイルをチェック
+textlint *.tex
 
-# Auto-fix issues where possible (use with caution)
-textlint --fix *.tex          
+# 可能な問題を自動修正（注意して使用）
+textlint --fix *.tex
 
-# Check specific files
-textlint sotsuron.tex         # Undergraduate main
-textlint thesis.tex           # Graduate main
-textlint gaiyou.tex          # Undergraduate abstract
-textlint abstract.tex        # Graduate abstract
+# 特定のファイルをチェック
+textlint sotsuron.tex         # 学部生論文本体
+textlint thesis.tex           # 大学院生論文本体
+textlint gaiyou.tex           # 学部生概要
+textlint abstract.tex         # 大学院生概要
 
-# Check example files
-textlint example.tex          
-textlint example-gaiyou.tex   
+# サンプルファイルをチェック
+textlint example.tex
+textlint example-gaiyou.tex
 ```
 
-### Advanced Quality Checks
-```bash
-# Validate LaTeX syntax
-chktex sotsuron.tex
-chktex thesis.tex
-
-# Test with different engines
-latexmk -pdfdvi sotsuron.tex    # platex workflow (recommended)
-latexmk -pdf sotsuron.tex       # pdflatex workflow (if supported)
-```
-
-## MCP Tools Usage
-
-### GitHub Operations
-Use MCP tools instead of `gh` command for GitHub operations:
-- **Development**: Use `mcp__gh-toshi__*` tools for development work
-- **Student testing**: Use `mcp__gh-k19__*` tools only when testing student workflows
