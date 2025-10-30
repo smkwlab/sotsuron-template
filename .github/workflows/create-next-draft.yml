@@ -107,9 +107,6 @@ jobs:
 
           echo "✅ Created $NEXT_BRANCH based on $CURRENT_BRANCH"
 
-      # Simplified: Students manually merge abstract into draft branches if needed
-      # No automatic base branch updates
-
       - name: Add comment to PR
         if: steps.check-branch.outputs.exists == 'false'
         env:
