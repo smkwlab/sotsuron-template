@@ -27,10 +27,10 @@ Students create individual repositories using automated Docker-based tools:
 
 ```bash
 # Self-service repository creation (zero dependencies)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 
 # With student ID for automatic thesis type detection
-STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 ```
 
 ### Automated File Cleanup
@@ -127,7 +127,7 @@ The system automatically detects thesis type:
 ### For Document Examples
 1. **Maintain realistic examples** reflecting actual thesis content
 2. **Keep examples current** with latest academic standards
-3. **Test compilation** with all supported LaTeX engines
+3. **Test compilation** with uplatex engine
 4. **Validate textlint rules** against examples
 
 ### For Workflow Integration
@@ -158,14 +158,6 @@ latexmk -pv example-gaiyou.tex
 # Check Japanese writing quality
 textlint sotsuron.tex thesis.tex
 textlint example*.tex
-
-# Validate LaTeX syntax
-chktex sotsuron.tex
-chktex thesis.tex
-
-# Test with different engines
-latexmk -pdfdvi sotsuron.tex    # platex workflow
-latexmk -pdf sotsuron.tex       # pdflatex workflow (if supported)
 ```
 
 ### Integration Testing
