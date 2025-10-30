@@ -216,8 +216,8 @@ DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smk
    - `Create branch` → `Publish branch`
 
 3. **PRを作成すると次のブランチが自動作成**
-   - abstract-1st → abstract-2nd（自動、前版の概要を引き継ぎ）
-   - abstract-2nd → abstract-3rd（自動、前版の概要を引き継ぎ）
+   - abstract-1st のPR作成 → abstract-2nd ブランチが自動作成（abstract-1st をベースとする）
+   - abstract-2nd のPR作成 → abstract-3rd ブランチが自動作成（abstract-2nd をベースとする）
    - 以降も同様
 
    **ブランチの切り替え方法**:
