@@ -64,11 +64,26 @@ Students create individual repositories using automated tools:
 
 ```bash
 # Self-service repository creation (zero dependencies)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 
 # With student ID for automatic thesis type detection
-STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 ```
+
+## Review Workflow
+
+This template uses a simplified Pull Request-based review workflow:
+
+**Branch Structure:**
+- **main**: Base branch and final deliverable
+- **xth-draft**: Sequential draft branches (0th-draft, 1st-draft, 2nd-draft, ...)
+- **abstract-xth**: Abstract/summary branches (abstract-1st, abstract-2nd, ...)
+
+**Workflow:**
+1. Student creates PR from draft branch to main
+2. Faculty reviews via GitHub PR comments and suggestions
+3. After approval and final-* tag, PR auto-merges to main
+4. Next draft branch is automatically created for continued work
 
 ## Common Tasks
 
@@ -102,5 +117,4 @@ chktex sotsuron.tex thesis.tex
 *Note: docs/ directory contains development-specific information*
 
 - **[Development Guide](docs/CLAUDE-DEVELOPMENT.md)** - Architecture, workflows, ecosystem integration
-- **[Troubleshooting](docs/CLAUDE-TROUBLESHOOTING.md)** - Common issues, debug commands
 - **[Workflows & Examples](docs/CLAUDE-WORKFLOWS.md)** - Student workflows, detailed command examples

@@ -16,7 +16,7 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 **スクリプトでリポジトリを作成**：
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 ```
 
 **実行手順**：
@@ -118,16 +118,11 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 #### 4.1 コメントの確認
 
-添削コメントは **2つのPR** で確認してください：
+添削コメントは **あなたが作成したPR（1st-draft等）** で確認してください：
 
-1. **あなたが作成したPR（1st-draft等）**
-   - 直前版からの変更点に対するコメント
-   - 新規追加部分への指摘
-
-2. **レビュー用PR**
-   - 論文全体に対するコメント
-   - 以前の部分への追加指摘
-   - 全体構成への意見
+- 直前版からの変更点に対するコメント
+- 新規追加部分への指摘
+- 論文全体に対するコメント
 
 #### 4.2 Suggestionへの対応
 
@@ -221,12 +216,10 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
    - `Create branch` → `Publish branch`
 
 3. **PRを作成すると次のブランチが自動作成**
-   - abstract-1st → abstract-2nd（自動、前版の概要を引き継ぎ）
-   - abstract-2nd → abstract-3rd（自動、前版の概要を引き継ぎ）
+   - abstract-1st のPR作成 → abstract-2nd ブランチが自動作成（abstract-1st をベースとする）
+   - abstract-2nd のPR作成 → abstract-3rd ブランチが自動作成（abstract-2nd をベースとする）
    - 以降も同様
-   
-   **論文本体への反映**: 概要執筆後の論文本体（6th-draft以降）には、最新の概要が自動的に含まれます
-   
+
    **ブランチの切り替え方法**:
    - GitHub Desktop で `Fetch origin` → `Current Branch` をクリック
    - **`origin/abstract-2nd`** のように表示されているブランチを選択

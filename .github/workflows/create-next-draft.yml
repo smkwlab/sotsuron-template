@@ -107,94 +107,15 @@ jobs:
 
           echo "✅ Created $NEXT_BRANCH based on $CURRENT_BRANCH"
 
-      - name: Update draft branches when abstract is created
-        if: steps.check-branch.outputs.exists == 'false' && contains(github.head_ref, 'abstract-')
-        run: |
-          CURRENT_BRANCH="${{ steps.next-branch.outputs.current_branch }}"
-
-          echo "Abstract branch detected: $CURRENT_BRANCH"
-          echo "Updating existing draft branches to use this abstract as base..."
-
-          # 最新のdraftブランチを検索（20thから逆順で探す）
-          LATEST_DRAFT=""
-          for i in {20..1}; do
-            case $i in
-              1|21) SUFFIX="st" ;;
-              2|22) SUFFIX="nd" ;;
-              3|23) SUFFIX="rd" ;;
-              *) SUFFIX="th" ;;
-            esac
-
-            DRAFT_BRANCH="${i}${SUFFIX}-draft"
-            if git show-ref --verify --quiet "refs/remotes/origin/$DRAFT_BRANCH"; then
-              LATEST_DRAFT="$DRAFT_BRANCH"
-              break
-            fi
-          done
-
-          if [ -n "$LATEST_DRAFT" ]; then
-            echo "Found latest draft branch: $LATEST_DRAFT"
-
-            # 既存のdraftブランチのベースを最新abstractに変更
-            echo "Updating $LATEST_DRAFT to be based on $CURRENT_BRANCH"
-
-            # シンプルなベース変更：最新abstractをベースに既存draftブランチを再作成
-            git fetch origin "$LATEST_DRAFT"
-            git fetch origin "$CURRENT_BRANCH"
-
-            # 最新abstractをベースにdraftブランチを再作成
-            git checkout "origin/$CURRENT_BRANCH"
-            git checkout -b "$LATEST_DRAFT" --force
-            git push --force-with-lease origin "$LATEST_DRAFT"
-
-            echo "✅ Updated $LATEST_DRAFT to be based on $CURRENT_BRANCH"
-
-          else
-            echo "No draft branches found to update"
-          fi
-
       - name: Add comment to PR
         if: steps.check-branch.outputs.exists == 'false'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           NEXT_BRANCH="${{ steps.next-branch.outputs.next_branch }}"
-          CURRENT_BRANCH="${{ steps.next-branch.outputs.current_branch }}"
 
-          if [[ "$CURRENT_BRANCH" =~ abstract- ]]; then
-            # 最新のdraftブランチを検索して通知に含める
-            LATEST_DRAFT=""
-            for i in {20..1}; do
-              case $i in
-                1|21) SUFFIX="st" ;;
-                2|22) SUFFIX="nd" ;;
-                3|23) SUFFIX="rd" ;;
-                *) SUFFIX="th" ;;
-              esac
-
-              DRAFT_BRANCH="${i}${SUFFIX}-draft"
-              if git show-ref --verify --quiet "refs/remotes/origin/$DRAFT_BRANCH"; then
-                LATEST_DRAFT="$DRAFT_BRANCH"
-                break
-              fi
-            done
-
-            if [ -n "$LATEST_DRAFT" ]; then
-              gh pr comment ${{ github.event.pull_request.number }} \
-                --body "$(cat <<EOF
-          🌿 **次稿用ブランチを自動作成しました**: \`$NEXT_BRANCH\`
-
-          📝 **本文執筆は \`$LATEST_DRAFT\` ブランチで続けてください**（最新の概要を含みます）
-          EOF
-          )"
-            else
-              gh pr comment ${{ github.event.pull_request.number }} \
-                --body "🌿 **次稿用ブランチを自動作成しました**: \`$NEXT_BRANCH\`"
-            fi
-          else
-            gh pr comment ${{ github.event.pull_request.number }} \
-              --body "🌿 **次稿用ブランチを自動作成しました**: \`$NEXT_BRANCH\`"
-          fi
+          gh pr comment ${{ github.event.pull_request.number }} \
+            --body "🌿 **次稿用ブランチを自動作成しました**: \`$NEXT_BRANCH\`"
 
       - name: Add notice if branch exists
         if: steps.check-branch.outputs.exists == 'true'

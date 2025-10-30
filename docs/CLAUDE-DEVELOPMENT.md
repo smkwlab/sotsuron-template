@@ -27,10 +27,10 @@ Students create individual repositories using automated Docker-based tools:
 
 ```bash
 # Self-service repository creation (zero dependencies)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 
 # With student ID for automatic thesis type detection
-STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+DOC_TYPE=thesis STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
 ```
 
 ### Automated File Cleanup
@@ -39,18 +39,18 @@ Based on student ID patterns:
 - **k??gjk??** (graduate): Keeps `thesis.tex`, `abstract.tex` only
 
 ### Review Workflow System
-Sophisticated GitHub Actions-based supervision system:
+Simplified GitHub Actions-based supervision system:
 
 **Branching Strategy:**
+- **main**: Base branch and final deliverable
 - Sequential draft branches: `0th-draft` → `1st-draft` → `2nd-draft` → ...
-- Persistent `review-branch` for holistic feedback
-- Base `initial` branch for clean diff tracking
+- Abstract branches: `abstract-1st` → `abstract-2nd` → ...
 
 **Faculty Review Features:**
-- Individual draft PRs for incremental changes
-- Comprehensive review PR showing entire thesis
-- GitHub suggestions for direct edits
-- Automated branch creation for next drafts
+- Individual draft PRs directly to main for each revision
+- GitHub PR comments and suggestions for feedback
+- Automated next draft branch creation after PR opened
+- Final submission via `final-*` tag triggers auto-merge
 
 ## File Structure Conventions
 
@@ -127,7 +127,7 @@ The system automatically detects thesis type:
 ### For Document Examples
 1. **Maintain realistic examples** reflecting actual thesis content
 2. **Keep examples current** with latest academic standards
-3. **Test compilation** with all supported LaTeX engines
+3. **Test compilation** with uplatex engine
 4. **Validate textlint rules** against examples
 
 ### For Workflow Integration
@@ -158,14 +158,6 @@ latexmk -pv example-gaiyou.tex
 # Check Japanese writing quality
 textlint sotsuron.tex thesis.tex
 textlint example*.tex
-
-# Validate LaTeX syntax
-chktex sotsuron.tex
-chktex thesis.tex
-
-# Test with different engines
-latexmk -pdfdvi sotsuron.tex    # platex workflow
-latexmk -pdf sotsuron.tex       # pdflatex workflow (if supported)
 ```
 
 ### Integration Testing
