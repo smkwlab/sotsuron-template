@@ -117,5 +117,4 @@ chktex sotsuron.tex thesis.tex
 *Note: docs/ directory contains development-specific information*
 
 - **[Development Guide](docs/CLAUDE-DEVELOPMENT.md)** - Architecture, workflows, ecosystem integration
-- **[Troubleshooting](docs/CLAUDE-TROUBLESHOOTING.md)** - Common issues, debug commands
 - **[Workflows & Examples](docs/CLAUDE-WORKFLOWS.md)** - Student workflows, detailed command examples
