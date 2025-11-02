@@ -1,0 +1,52 @@
+name: Japanese Writing Quality Check
+on:
+  pull_request:
+    paths:
+      - '**.tex'
+
+jobs:
+  textlint:
+    runs-on: ubuntu-latest
+    container: ghcr.io/smkwlab/texlive-ja-textlint:2025e
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run textlint on TeX files
+        id: textlint
+        continue-on-error: true
+        run: |
+          # PR で変更された .tex ファイルのみをチェック
+          git fetch origin ${{ github.base_ref }}
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.tex$' || true)
+
+          if [ -n "$CHANGED_FILES" ]; then
+            echo "Checking files: $CHANGED_FILES"
+            textlint $CHANGED_FILES > textlint-result.txt 2>&1 || true
+            cat textlint-result.txt
+
+            # 問題が見つかったかチェック
+            if grep -q "✖" textlint-result.txt; then
+              echo "has_issues=true" >> $GITHUB_OUTPUT
+            else
+              echo "has_issues=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "No .tex files changed in this PR"
+            echo "has_issues=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR with textlint results
+        if: steps.textlint.outputs.has_issues == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '📝 **textlint による日本語品質チェック結果**\n\n文章の改善提案があります。ローカル環境で `textlint *.tex` を実行して詳細を確認してください。'
+            })
