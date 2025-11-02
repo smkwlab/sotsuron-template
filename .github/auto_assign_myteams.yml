@@ -15,11 +15,11 @@ reviewers:
 # 0に設定すると全てのReviewersのメンバが追加されます。
 numberOfReviewers: 0
 
-# Assigneesrに設定するメンバを追加します。
+# Assigneesに設定するメンバを追加します。
 assignees:
   - toshi0806
 
-# Assigneessに追加するメンバ数を指定できます。
+# Assigneesに追加するメンバ数を指定できます。
 # 追加メンバより設定数が少ない場合、ランダムで追加されます。
 # 0に設定すると全てのAssigneesのメンバが追加されます。
 numberOfAssignees: 0
