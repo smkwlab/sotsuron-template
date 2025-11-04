@@ -13,8 +13,8 @@ permissions:
 jobs:
   build-and-release-pdf:
     runs-on: ubuntu-latest
-    container: ghcr.io/smkwlab/texlive-ja-textlint:2025e
+    container: ghcr.io/smkwlab/texlive-ja-textlint:2025g
     steps:
-      - uses: smkwlab/latex-release-action@v2.2.0
+      - uses: smkwlab/latex-release-action@v2.5.0
         with:
           files: sotsuron, gaiyou, thesis, abstract
