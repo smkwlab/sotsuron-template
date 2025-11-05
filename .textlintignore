@@ -1,0 +1,8 @@
+# Ignore all Markdown documentation files (use ですます調)
+**/*.md
+**/*.markdown
+*.md
+*.markdown
+
+# Ignore docs directory entirely
+docs/
