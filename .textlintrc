@@ -95,26 +95,6 @@
             }
         },
         {
-            "files": ["*.md", "*.markdown"],
-            "filters": {
-                "allowlist": {
-                    "allow": [
-                        "/```[\\s\\S]*?```/m",
-                        "/`[^`]+`/g",
-                        "/\\[[^\\]]+\\]\\([^)]+\\)/g",
-                        "/!\\[[^\\]]*\\]\\([^)]+\\)/g"
-                    ]
-                }
-            },
-            "rules": {
-                "preset-ja-technical-writing": {
-                    "no-mix-dearu-desumasu": false,
-                    "no-exclamation-question-mark": false,
-                    "ja-no-mixed-period": false
-                }
-            }
-        },
-        {
             "files": ["*.tex", "*.latex"],
             "filters": {
                 "allowlist": {
