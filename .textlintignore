@@ -1,0 +1,6 @@
+# Ignore all Markdown documentation files (use ですます調)
+**/*.md
+**/*.markdown
+
+# Ignore example files (sample content, not student work)
+example*.tex
