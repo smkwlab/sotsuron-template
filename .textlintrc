@@ -78,31 +78,5 @@
                 "VS Code"
             ]
         }
-    },
-    "overrides": [
-        {
-            "files": ["*.html"],
-            "filters": {
-                "allowlist": {
-                    "allow": [
-                        "/<!--[\\s\\S]*?-->/m",
-                        "/<p class=\"author\"[\\s\\S]*?<\\/p>/",
-                        "/<div class=\"learning-progress\"[\\s\\S]*?<\\/div>/",
-                        "/<code[\\s\\S]*?<\\/code>/",
-                        "/<pre[\\s\\S]*?<\\/pre>/"
-                    ]
-                }
-            }
-        },
-        {
-            "files": ["*.tex", "*.latex"],
-            "filters": {
-                "allowlist": {
-                    "allow": [
-                        "/%.*$/m"
-                    ]
-                }
-            }
-        }
-    ]
+    }
 }
