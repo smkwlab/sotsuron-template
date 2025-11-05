@@ -99,7 +99,7 @@
             "filters": {
                 "allowlist": {
                     "allow": [
-                        "/%[\\s\\S]*?$/m"
+                        "/%.*$/m"
                     ]
                 }
             }
