@@ -16,7 +16,7 @@ Git の詳しい知識は必要ありません。GitHub Desktop の操作だけ�
 
 **スクリプトでリポジトリを作成**：
 ```bash
-DOC_TYPE=thesis /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)" bash thesis
 ```
 
 **実行手順**：
