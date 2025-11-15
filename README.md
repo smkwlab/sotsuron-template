@@ -14,53 +14,19 @@ VS Code devContainer を用いて、LaTeX 処理系、および textlint を内�
 1. **Docker Desktop** - LaTeX 環境の実行に必要
 2. **GitHub Desktop** - リポジトリ管理・同期に必要
 3. **GitHub CLI (gh)** - リポジトリ作成スクリプトの実行に必要
+   - [インストール方法](https://github.com/smkwlab/thesis-management-tools/blob/main/docs/INSTALL-GH.md)
 
-#### GitHub CLI のインストール
+#### 準備
 
-**macOS:**
-```bash
-brew install gh
-```
-
-**Windows (WSL):**
-```bash
-# WSL 内で実行
-sudo mkdir -p -m 755 /etc/apt/keyrings
-wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
-sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-sudo apt update
-sudo apt install gh
-```
-
-**注意:** Windows では WSL 内で全ての操作を実行してください。
-
-**インストール確認:**
-```bash
-gh --version
-```
-
-#### GitHub 認証
-
-リポジトリ作成スクリプト実行前に、GitHub CLI で認証を完了しておく：
+GitHub CLI の認証を完了してください：
 
 ```bash
 gh auth login
 ```
 
-**認証手順:**
-1. `GitHub.com` を選択
-2. `HTTPS` を選択
-3. `Login with a web browser` を選択
-4. 表示されたワンタイムコードをコピー
-5. ブラウザが自動で開くので、コードを入力して認証完了
+**注意:** `gh` コマンドが見つからない場合は [インストール方法](https://github.com/smkwlab/thesis-management-tools/blob/main/docs/INSTALL-GH.md) を参照してください。
 
-**認証確認:**
-```bash
-gh auth status
-```
-
-#### スクリプトでリポジトリを作成
+#### リポジトリ作成
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)" bash thesis
@@ -70,8 +36,6 @@ gh auth status
 1. 上記コマンドを実行（macOS のターミナルまたは Windows の WSL 内）
 2. 学籍番号を入力
 3. 自動でリポジトリ作成・セットアップ完了
-
-**注意:** GitHub 認証は事前に `gh auth login` で完了済みであること。
 
 ### 2. 論文執筆の開始
 
