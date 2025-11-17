@@ -1,0 +1,44 @@
+name: Notify Lab ML on PR
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  notify-ml:
+    # draft PRの場合はスキップ
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract student info from repository name
+        id: repo-info
+        run: |
+          # リポジトリ名から学籍番号を抽出（例: k21rs001-sotsuron → k21rs001）
+          REPO_NAME="${{ github.event.repository.name }}"
+          STUDENT_ID=$(echo $REPO_NAME | grep -oE '^k[0-9]{2}[a-z]{2,3}[0-9]{2,3}')
+          echo "student_id=$STUDENT_ID" >> $GITHUB_OUTPUT
+
+      - name: Send notification email to lab ML
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "[PR] ${{ github.event.repository.name }}: ${{ github.event.pull_request.title }}"
+          to: ${{ secrets.LAB_ML_ADDRESS }}
+          from: ${{ secrets.SMTP_FROM }}
+          content_type: text/html
+          body: |
+            <h2>新しいPull Requestが作成されました</h2>
+
+            <p><strong>学生:</strong> ${{ steps.repo-info.outputs.student_id }} (${{ github.event.pull_request.user.login }})</p>
+            <p><strong>リポジトリ:</strong> ${{ github.event.repository.name }}</p>
+            <p><strong>タイトル:</strong> ${{ github.event.pull_request.title }}</p>
+            <p><strong>ブランチ:</strong> ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}</p>
+
+            <p><a href="${{ github.event.pull_request.html_url }}">PRを確認する</a></p>
+
+            <hr>
+            <p><small>このメールはGitHub Actionsから自動送信されています</small></p>
