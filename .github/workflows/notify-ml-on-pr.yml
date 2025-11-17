@@ -6,8 +6,8 @@ on:
 
 jobs:
   notify-ml:
-    # draft PRの場合はスキップ
-    if: ${{ !github.event.pull_request.draft }}
+    # draft PRの場合、またはOrganization Secretsが未設定の場合はスキップ
+    if: ${{ !github.event.pull_request.draft && secrets.SMTP_SERVER != '' }}
     runs-on: ubuntu-latest
 
     steps:
