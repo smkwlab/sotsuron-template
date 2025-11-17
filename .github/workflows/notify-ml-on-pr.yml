@@ -14,13 +14,18 @@ jobs:
       - name: Extract student info from repository name
         id: repo-info
         run: |
-          # リポジトリ名から学籍番号を抽出（例: k21rs001-sotsuron → k21rs001）
+          # リポジトリ名から学籍番号を抽出
+          # 期待フォーマット: 'k' + 2桁年度 + 2-3文字コード + 2-3桁番号 (例: k21rs001, k21gjk01)
           REPO_NAME="${{ github.event.repository.name }}"
           STUDENT_ID=$(echo $REPO_NAME | grep -oE '^k[0-9]{2}[a-z]{2,3}[0-9]{2,3}')
+          if [ -z "$STUDENT_ID" ]; then
+            echo "Warning: Could not extract student ID from repository name: $REPO_NAME" >&2
+            STUDENT_ID="(不明)"
+          fi
           echo "student_id=$STUDENT_ID" >> $GITHUB_OUTPUT
 
       - name: Send notification email to lab ML
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7  # v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
