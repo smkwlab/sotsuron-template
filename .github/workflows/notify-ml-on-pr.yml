@@ -11,14 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Extract student info from repository name
-        id: repo-info
-        run: |
-          # リポジトリ名から学籍番号を抽出（例: k21rs001-sotsuron → k21rs001）
-          REPO_NAME="${{ github.event.repository.name }}"
-          STUDENT_ID=$(echo $REPO_NAME | grep -oE '^k[0-9]{2}[a-z]{2,3}[0-9]{2,3}')
-          echo "student_id=$STUDENT_ID" >> $GITHUB_OUTPUT
-
       - name: Send notification email to lab ML
         uses: dawidd6/action-send-mail@v3
         with:
@@ -29,16 +21,16 @@ jobs:
           subject: "[PR] ${{ github.event.repository.name }}: ${{ github.event.pull_request.title }}"
           to: ${{ secrets.LAB_ML_ADDRESS }}
           from: ${{ secrets.SMTP_FROM }}
-          content_type: text/html
+          content_type: text/plain
           body: |
-            <h2>新しいPull Requestが作成されました</h2>
+            新しいPull Requestが作成されました
 
-            <p><strong>学生:</strong> ${{ steps.repo-info.outputs.student_id }} (${{ github.event.pull_request.user.login }})</p>
-            <p><strong>リポジトリ:</strong> ${{ github.event.repository.name }}</p>
-            <p><strong>タイトル:</strong> ${{ github.event.pull_request.title }}</p>
-            <p><strong>ブランチ:</strong> ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}</p>
+            リポジトリ: ${{ github.event.repository.name }}
+            作成者: ${{ github.event.pull_request.user.login }}
+            タイトル: ${{ github.event.pull_request.title }}
+            ブランチ: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
 
-            <p><a href="${{ github.event.pull_request.html_url }}">PRを確認する</a></p>
+            PR URL: ${{ github.event.pull_request.html_url }}
 
-            <hr>
-            <p><small>このメールはGitHub Actionsから自動送信されています</small></p>
+            ---
+            このメールはGitHub Actionsから自動送信されています
