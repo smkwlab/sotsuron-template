@@ -80,10 +80,12 @@ This template uses a simplified Pull Request-based review workflow:
 - **abstract-xth**: Abstract/summary branches (abstract-1st, abstract-2nd, ...)
 
 **Workflow:**
-1. Student creates PR from draft branch to main
-2. Faculty reviews via GitHub PR comments and suggestions
-3. After approval and final-* tag, PR auto-merges to main
-4. Next draft branch is automatically created for continued work
+1. Student creates PR from draft branch to previous draft (or main for 1st-draft)
+2. PR shows only changes since previous revision for efficient review
+3. Faculty reviews via GitHub PR comments and suggestions
+4. After review, PR is closed (not merged) and student continues on next draft
+5. Next draft branch is automatically created based on current draft
+6. Final submission managed via `final` tag
 
 ## Common Tasks
 
