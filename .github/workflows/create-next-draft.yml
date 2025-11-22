@@ -4,8 +4,7 @@ name: Create Next Draft Branch
 on:
   pull_request:
     types: [opened]
-    branches:
-      - main
+    # No branch filter: allow PRs to any branch (draft/abstract filtering done in job condition)
 
 jobs:
   create-next-branch:
