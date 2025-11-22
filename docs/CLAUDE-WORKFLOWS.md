@@ -15,28 +15,29 @@
 
 ### Phase 1: 論文執筆
 ```
-main ← 0th-draft (アウトライン) → PR → レビュー → 承認
-main ← 1st-draft → PR → レビュー → 承認
-main ← 2nd-draft → PR → レビュー → 承認
+0th-draft → PR (base: main, アウトライン) → レビュー
+1st-draft → PR (base: main) → レビュー
+2nd-draft → PR (base: 1st-draft, 前回からの差分のみ) → レビュー
+3rd-draft → PR (base: 2nd-draft, 前回からの差分のみ) → レビュー
 ...
 ```
 
 ### Phase 2: 概要執筆
 ```
-main ← abstract-1st → PR → レビュー → 承認
-main ← abstract-2nd → PR → レビュー → 承認
+abstract-1st → PR (base: 最新のdraft or main) → レビュー
+abstract-2nd → PR (base: abstract-1st, 前回からの差分のみ) → レビュー
 ```
 
 ### Phase 3: 最終提出
 ```
-main ← final-draft → PR → 教員承認 → final-* タグ → 自動マージ
+最終版ブランチ → final タグ付与 → 提出完了
 ```
 
 ### ブランチ管理
-- **作業ブランチ**: ドラフトブランチから main へ直接 PR を作成
-- **教員フィードバック**: 各ドラフト PR で GitHub のコメントと提案機能を使用
+- **作業ブランチ**: 各 draft PR は直前の draft をベースとする（前回からの差分のみを表示）
+- **教員フィードバック**: PR で GitHub のコメントと suggestion 機能を使用
 - **次のドラフト**: PR 作成後に自動的に次のブランチが作成される
-- **履歴管理**: main ブランチで完全な改訂履歴を保持
+- **PR の扱い**: PR はマージせず、レビュー完了後にクローズして次稿へ継続
 
 ## LaTeX コンパイル例
 
