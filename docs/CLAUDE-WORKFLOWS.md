@@ -39,6 +39,31 @@ abstract-2nd → PR (base: abstract-1st, 前回からの差分のみ) → レビ
 - **次のドラフト**: PR 作成後に自動的に次のブランチが作成される
 - **PR の扱い**: PR はマージせず、レビュー完了後にクローズして次稿へ継続
 
+### 教員の Suggest を次のドラフトに取り込む
+
+PR 作成後、教員が Suggest を投稿した場合、それを次のドラフトブランチに取り込むことができます。
+
+```bash
+# 現在のブランチで自動判定して取り込み
+git checkout 2nd-draft
+./scripts/sync-suggestions.sh
+# → 自動的に 1st-draft からの Suggest を取り込み
+
+# ブランチを指定して実行
+./scripts/sync-suggestions.sh 3rd-draft
+# → 自動的に 2nd-draft からの Suggest を取り込み
+```
+
+**動作:**
+- 現在のブランチ名から前のドラフトを自動判定
+- 論文本体（xth-draft）と概要（abstract-xth）の両方に対応
+- リモートから最新の変更を取得してマージ
+- コンフリクトが発生した場合は手動で解決が必要
+
+**注意事項:**
+- `1st-draft` や `abstract-1st` では実行できません（前のドラフトが存在しないため）
+- マージ後は `git push origin <ブランチ名>` でリモートに反映してください
+
 ## LaTeX コンパイル例
 
 ### 学部生論文のコンパイル
