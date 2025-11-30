@@ -7,16 +7,8 @@ on:
     tags:
       - '*'
 
-permissions:
-  contents: write
-
 jobs:
-  build-and-release-pdf:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: smkwlab/latex-release-action@v3.1.0
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          files: sotsuron, gaiyou, thesis, abstract
+  build:
+    uses: smkwlab/.github/.github/workflows/latex-build.yml@main
+    with:
+      files: "sotsuron, gaiyou, thesis, abstract"
