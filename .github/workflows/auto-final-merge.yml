@@ -8,4 +8,4 @@ on:
 
 jobs:
   auto-merge:
-    uses: smkwlab/.github/.github/workflows/auto-final-merge.yml@main
+    uses: smkwlab/.github/.github/workflows/auto-final-merge.yml@v1

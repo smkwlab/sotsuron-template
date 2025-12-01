@@ -10,4 +10,4 @@ on:
 
 jobs:
   prevent-merge:
-    uses: smkwlab/.github/.github/workflows/prevent-draft-merge.yml@main
+    uses: smkwlab/.github/.github/workflows/prevent-draft-merge.yml@v1

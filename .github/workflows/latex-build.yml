@@ -9,6 +9,6 @@ on:
 
 jobs:
   build:
-    uses: smkwlab/.github/.github/workflows/latex-build.yml@main
+    uses: smkwlab/.github/.github/workflows/latex-build.yml@v1
     with:
       files: "sotsuron, gaiyou, thesis, abstract"
