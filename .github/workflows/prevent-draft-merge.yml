@@ -4,9 +4,8 @@ name: Prevent Draft Merge
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - main
-      - review-branch
+    # All draft PRs should be protected, not just PRs to main/review-branch
+    # The reusable workflow checks if the head branch is a draft pattern
 
 jobs:
   prevent-merge:
