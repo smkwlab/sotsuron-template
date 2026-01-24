@@ -4,6 +4,7 @@ name: Auto Final Merge
 on:
   push:
     tags:
+      - 'final'
       - 'final-*'
 
 jobs:
