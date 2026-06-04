@@ -29,8 +29,10 @@ gh auth login
 #### リポジトリ作成
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)" bash thesis
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/v1/create-repo/setup.sh)" bash thesis
 ```
+
+> 💡 `v1` は安定版（最新の v1 系）を指す移動タグです。最新の開発版を試す場合は URL の `v1` を `main` に置き換えてください。
 
 **実行手順:**
 1. 上記コマンドを実行（macOS のターミナルまたは Windows の WSL 内）
