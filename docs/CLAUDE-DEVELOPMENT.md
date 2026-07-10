@@ -27,10 +27,10 @@ Students create individual repositories using automated Docker-based tools:
 
 ```bash
 # Self-service repository creation (zero dependencies)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)" bash thesis
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/main/create-repo/setup.sh)" bash thesis
 
 # With student ID for automatic thesis type detection
-STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/thesis-management-tools/main/create-repo/setup.sh)" bash thesis
+STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/main/create-repo/setup.sh)" bash thesis
 ```
 
 ### Automated File Cleanup
@@ -124,7 +124,7 @@ The system automatically detects thesis type:
 2. **Verify compatibility** with both thesis types
 3. **Update documentation** (README.md, WRITING-GUIDE.md)
 4. **Test automated repository creation**
-5. **Coordinate with thesis-management-tools** for deployment
+5. **Coordinate with student-repo-management** for deployment
 
 ### For Document Examples
 1. **Maintain realistic examples** reflecting actual thesis content
@@ -172,17 +172,17 @@ textlint example*.tex
 
 ### Related Repositories
 - **latex-environment**: Development container base
-- **thesis-management-tools**: Student repository creation and management
+- **student-repo-management**: Student repository creation and management
 - **latex-release-action**: Automated PDF generation
 - **texlive-ja-textlint**: Base Docker image for compilation
 
 ### Version Dependencies
 - Uses `latex-environment:release` for development container
-- Integrates with `thesis-management-tools` for student onboarding
+- Integrates with `student-repo-management` for student onboarding
 - Compatible with `latex-release-action@v2.2.0` for CI/CD
 
 ### Faculty Tools Integration
-- Review workflows in `thesis-management-tools`
+- Review workflows in `student-repo-management`
 - Automated supervision via GitHub Actions
 - Progress tracking and deadline management
 - Quality assurance through automated checks
