@@ -37,6 +37,7 @@ abstract-2nd → PR (base: abstract-1st, 前回からの差分のみ) → レビ
 - **作業ブランチ**: 各 draft PR は直前の draft をベースとする（前回からの差分のみを表示）
 - **教員フィードバック**: PR で GitHub のコメントと suggestion 機能を使用
 - **次のドラフト**: PR 作成後に自動的に次のブランチが作成される
+- **suggestion の反映**: suggestion を受け入れると、その修正は自動的に次の draft ブランチへも merge される（sync-next-draft）。手元の作業ブランチには `git pull` で取り込む。自動 merge がコンフリクトした場合は同期 PR が自動作成されるので、ブラウザの「Resolve conflicts」で解決してからその同期 PR を merge する（同期 PR は merge してよい）
 - **PR の扱い**: PR はマージせず、レビュー完了後にクローズして次稿へ継続
 
 ## LaTeX コンパイル例
@@ -97,4 +98,3 @@ textlint abstract.tex         # 大学院生概要
 textlint example.tex
 textlint example-gaiyou.tex
 ```
-
