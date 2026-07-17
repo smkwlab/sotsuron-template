@@ -23,15 +23,9 @@ The repository supports both thesis types with smart file organization:
 - `.textlintrc` - Japanese writing quality rules
 
 ### Student Repository Creation
-Students create individual repositories using automated Docker-based tools:
 
-```bash
-# Self-service repository creation (zero dependencies)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/main/create-repo/setup.sh)" bash thesis
-
-# With student ID for automatic thesis type detection
-STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/main/create-repo/setup.sh)" bash thesis
-```
+Students create individual repositories with the automated setup script; see
+the [README](../README.md#リポジトリ作成) for the current one-liner.
 
 ### Automated File Cleanup
 Based on student ID patterns:
