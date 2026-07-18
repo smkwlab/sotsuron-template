@@ -60,15 +60,8 @@ The system automatically detects thesis type:
 
 ## Student Repository Creation
 
-Students create individual repositories using automated tools:
-
-```bash
-# Self-service repository creation (zero dependencies)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/main/create-repo/setup.sh)" bash thesis
-
-# With student ID for automatic thesis type detection
-STUDENT_ID=k21rs001 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/smkwlab/student-repo-management/main/create-repo/setup.sh)" bash thesis
-```
+Students create individual repositories with the automated setup script; see
+the [README](README.md#リポジトリ作成) for the current one-liner.
 
 ## Review Workflow
 
