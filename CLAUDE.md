@@ -48,15 +48,13 @@ textlint example.tex          # Check example content
 └── .github/workflows/        # Automated workflows
 ```
 
-## Student ID Pattern Recognition
+## Thesis Type Detection
 
-The system automatically detects thesis type:
-
-**Undergraduate patterns:**
-- `k??rs???` (e.g., k21rs001) → keeps `sotsuron.tex`, `gaiyou.tex`, examples
-
-**Graduate patterns:**  
-- `k??gjk??` (e.g., k21gjk01) → keeps `thesis.tex`, `abstract.tex` only
+Student repositories keep only the files for their thesis type (undergraduate
+→ `sotsuron.tex`/`gaiyou.tex`/examples, graduate → `thesis.tex`/`abstract.tex`).
+The detection and cleanup are implemented in student-repo-management; see
+[docs/CLAUDE-DEVELOPMENT.md](docs/CLAUDE-DEVELOPMENT.md#thesis-type-detection-and-file-cleanup)
+for the contract and implementation pointers.
 
 ## Student Repository Creation
 
@@ -78,7 +76,8 @@ This template uses a simplified Pull Request-based review workflow:
 3. Faculty reviews via GitHub PR comments and suggestions
 4. After review, PR is closed (not merged) and student continues on next draft
 5. Next draft branch is automatically created based on current draft
-6. Final submission managed via `final` tag
+6. Students mark the submission version with the `submit` tag (README「論文提出について」);
+   the `final` / `final-*` tags trigger the auto-final-merge automation at faculty direction
 
 ## Common Tasks
 
@@ -111,5 +110,9 @@ chktex sotsuron.tex thesis.tex
 
 *Note: docs/ directory contains development-specific information*
 
-- **[Development Guide](docs/CLAUDE-DEVELOPMENT.md)** - Architecture, workflows, ecosystem integration
-- **[Workflows & Examples](docs/CLAUDE-WORKFLOWS.md)** - Student workflows, detailed command examples
+- **[Development Guide](docs/CLAUDE-DEVELOPMENT.md)** - Architecture, thesis type detection, workflow inventory, testing, ecosystem integration
+
+The student-facing writing workflow is documented in
+[latex-ecosystem STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
+(ecosystem-wide flow) and this repo's [README.md](README.md) / [WRITING-GUIDE.md](WRITING-GUIDE.md)
+(concrete steps).

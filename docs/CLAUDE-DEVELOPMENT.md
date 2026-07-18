@@ -2,6 +2,13 @@
 
 This document provides detailed development guidance for sotsuron-template.
 
+The student-facing writing workflow is documented elsewhere and is not
+duplicated here: the ecosystem-wide flow lives in
+[STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md),
+and this template's concrete steps (GitHub Desktop operations, submit-tag
+procedure, FAQ) live in [README.md](../README.md) and
+[WRITING-GUIDE.md](../WRITING-GUIDE.md).
+
 ## Architecture
 
 ### Template Structure
@@ -14,7 +21,7 @@ The repository supports both thesis types with smart file organization:
 - `example-gaiyou.tex` - Example abstract
 
 **Graduate (修士論文) files:**
-- `thesis.tex` - Main thesis document  
+- `thesis.tex` - Main thesis document
 - `abstract.tex` - Abstract (English or Japanese)
 
 **Shared files:**
@@ -27,10 +34,21 @@ The repository supports both thesis types with smart file organization:
 Students create individual repositories with the automated setup script; see
 the [README](../README.md#リポジトリ作成) for the current one-liner.
 
-### Automated File Cleanup
-Based on student ID patterns:
-- **k??rs???** (undergraduate): Keeps `sotsuron.tex`, `gaiyou.tex`, `example*.tex`
-- **k??gjk??** (graduate): Keeps `thesis.tex`, `abstract.tex` only
+### Thesis Type Detection and File Cleanup
+
+When a student repository is created, unused files are removed based on the
+thesis type:
+
+- **Undergraduate**: keeps `sotsuron.tex`, `gaiyou.tex`, `example*.tex`
+  (removes `thesis.tex`, `abstract.tex`)
+- **Graduate**: keeps `thesis.tex`, `abstract.tex`
+  (removes `sotsuron.tex`, `gaiyou.tex`, `example*.tex`)
+
+This is implemented in **student-repo-management**, not in this repository:
+`create-repo/main.sh` decides the type in `determine_thesis_type` (a student
+ID matching `^k[0-9]{2}g` is graduate, anything else is undergraduate) and
+prunes files in `remove_unused_thesis_files`. When changing the template's
+file set, coordinate with those functions.
 
 ### Review Workflow System
 Simplified GitHub Actions-based supervision system:
@@ -46,7 +64,31 @@ Simplified GitHub Actions-based supervision system:
 - GitHub PR comments and suggestions for feedback
 - Automated next draft branch creation after PR opened
 - PRs remain open for iterative review without merging
-- Final submission managed via `final` tag
+
+**Submission tags** (two tags with different roles):
+- `submit` — pushed by the **student** to mark the submission version of the
+  thesis body (see README「論文提出について」). Any tag push also triggers the
+  PDF release build.
+- `final` / `final-*` — trigger the **auto-final-merge** automation
+  (merging approved PRs and creating the release); used at faculty direction,
+  not part of the student's own procedure.
+
+## GitHub Actions Workflows
+
+All eight workflows are thin callers of the org-standard reusable workflows
+in `smkwlab/.github` (`@v1`), which centrally pins tool versions for the
+whole ecosystem:
+
+| Workflow | Trigger | Purpose |
+|---|---|---|
+| `latex-build.yml` | PR / tag push | Build the PDF; release on tags |
+| `create-next-draft.yml` | PR opened | Auto-create the next draft branch |
+| `sync-next-draft.yml` | push to `*-draft` / `abstract-*` | Merge applied suggestions into the next draft; opens a sync PR on conflict |
+| `prevent-draft-merge.yml` | PR | Block accidental merges of draft PRs |
+| `auto-final-merge.yml` | `final` / `final-*` tag | Final submission processing |
+| `ai-paper-review.yml` | PR | AI-based paper review comments |
+| `claude-qa.yml` | issue/PR comment | @claude Q&A for students |
+| `notify-ml-on-pr.yml` | PR | Notify the lab ML |
 
 ## File Structure Conventions
 
@@ -66,27 +108,16 @@ Simplified GitHub Actions-based supervision system:
 ├── .latexmkrc                # LaTeX build configuration
 ├── .textlintrc               # Japanese writing rules
 ├── .devcontainer/            # VSCode container setup
-└── .github/workflows/        # Student workflow automation
+└── .github/workflows/        # Workflow automation (see inventory above)
 ```
 
-### Development Files (not in student repos)
+### Documentation Files
 ```
-├── CLAUDE.md                 # This file (development only)
-├── README.md                 # Template documentation
-├── WRITING-GUIDE.md          # Academic writing guidance
-└── .github/workflows/        # Template management workflows
+├── CLAUDE.md                 # Claude Code guidance (this repo)
+├── docs/CLAUDE-DEVELOPMENT.md # This file
+├── README.md                 # Template documentation (student-facing)
+└── WRITING-GUIDE.md          # Academic writing guidance (student-facing)
 ```
-
-## Student ID Pattern Recognition
-The system automatically detects thesis type:
-
-**Undergraduate patterns:**
-- `k??rs???` (e.g., k21rs001, k23rs099)
-- Receives: `sotsuron.tex`, `gaiyou.tex`, examples
-
-**Graduate patterns:**  
-- `k??gjk??` (e.g., k21gjk01, k23gjk15)
-- Receives: `thesis.tex`, `abstract.tex` only
 
 ## Document Structure Standards
 
@@ -127,7 +158,7 @@ The system automatically detects thesis type:
 4. **Validate textlint rules** against examples
 
 ### For Workflow Integration
-1. **Test review branch system** with sample content
+1. **Test the draft-chain workflows** (create-next-draft, sync-next-draft) with sample content
 2. **Verify GitHub Actions** functionality
 3. **Validate student repository creation**
 4. **Test faculty review workflows**
@@ -141,12 +172,27 @@ latexmk -pv sotsuron.tex
 latexmk -pv gaiyou.tex
 
 # Test graduate compilation
-latexmk -pv thesis.tex  
+latexmk -pv thesis.tex
 latexmk -pv abstract.tex
 
 # Test examples
 latexmk -pv example.tex
 latexmk -pv example-gaiyou.tex
+
+# Cleanup
+latexmk -c                    # Remove auxiliary files
+latexmk -C                    # Remove all generated files including PDF
+```
+
+### Manual Compilation (bypassing latexmk)
+The `.latexmkrc` is configured for uplatex; the equivalent manual chain is:
+
+```bash
+uplatex sotsuron.tex          # 1st pass (thesis.tex for graduate)
+upbibtex sotsuron             # Bibliography
+uplatex sotsuron.tex          # 2nd pass
+uplatex sotsuron.tex          # 3rd pass
+dvipdfmx sotsuron.dvi         # Convert to PDF
 ```
 
 ### Quality Assurance
@@ -154,6 +200,9 @@ latexmk -pv example-gaiyou.tex
 # Check Japanese writing quality
 textlint sotsuron.tex thesis.tex
 textlint example*.tex
+
+# Auto-fix fixable issues (use with care)
+textlint --fix *.tex
 ```
 
 ### Integration Testing
@@ -166,20 +215,17 @@ textlint example*.tex
 
 ### Related Repositories
 - **latex-environment**: Development container base
-- **student-repo-management**: Student repository creation and management
-- **latex-release-action**: Automated PDF generation
+- **student-repo-management**: Student repository creation and registration
+  (also implements thesis type detection / file cleanup — see above)
+- **smkwlab/.github**: Org-standard reusable workflows (build, draft chain,
+  review automation) called by this repo's workflows; tool versions are
+  pinned centrally there
 - **texlive-ja-textlint**: Base Docker image for compilation
 
 ### Version Dependencies
-- Uses `latex-environment:release` for development container
-- Integrates with `student-repo-management` for student onboarding
-- Compatible with `latex-release-action@v2.2.0` for CI/CD
-
-### Faculty Tools Integration
-- Review workflows in `student-repo-management`
-- Automated supervision via GitHub Actions
-- Progress tracking and deadline management
-- Quality assurance through automated checks
+- The devcontainer tracks the `latex-environment` template
+- CI/CD comes entirely from `smkwlab/.github` reusable workflows (`@v1`);
+  this repository pins no action versions of its own
 
 ## Security and Permission Guidelines
 
