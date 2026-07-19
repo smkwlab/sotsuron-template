@@ -44,7 +44,7 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
 - `thesis.tex` - 論文本体  
 - `abstract.tex` - 概要
 
-## 基本的な流れ
+## 基本的な流れ（draft PR サイクル）
 
 1. **リポジトリをPCにクローン**
 2. **0th-draft ブランチで目次案を作成・提出**
@@ -53,6 +53,10 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
 5. **自動作成された 2nd-draft ブランチで第2稿を執筆**
 6. **3稿目以降も同様に繰り返し（次稿ブランチは自動作成）**
 7. **教員の指示で概要執筆開始**（論文本体がある程度完成した段階）
+
+> この 2〜6 の繰り返しが **draft PR サイクル**です。共通ルール（PR はマージせずクローズ・次稿ブランチ自動作成など）の全体像は
+> [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
+> にまとまっています。
 
 ## 詳細な操作手順
 
