@@ -284,4 +284,3 @@ def hello_world():
 - [student-repo-management](https://github.com/smkwlab/student-repo-management) - 詳細ガイド・教員向けツール
 
 **質問・サポート**: smkwlabML または担当教員まで。
-# Test
