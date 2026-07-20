@@ -108,9 +108,14 @@ chktex sotsuron.tex thesis.tex
 
 ## Detailed Documentation
 
-*Note: docs/ directory contains development-specific information*
+*Note: docs/ directory contains development-specific information, except
+docs/README.md*
 
 - **[Development Guide](docs/CLAUDE-DEVELOPMENT.md)** - Architecture, thesis type detection, workflow inventory, testing, ecosystem integration
+- **[docs/README.md](docs/README.md)** - Author-information template (name, student ID, thesis type)
+  filled in by the student. GitHub resolves READMEs in the order `.github/` → root → `docs/`,
+  so this repository still shows root README.md; student repositories show docs/README.md
+  because student-repo-management removes root README.md at creation time.
 
 The student-facing writing workflow is documented in
 [latex-ecosystem STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
