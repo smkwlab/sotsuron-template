@@ -59,7 +59,7 @@ for the contract and implementation pointers.
 ## Student Repository Creation
 
 Students create individual repositories with the automated setup script; see
-the [README](README.md#リポジトリ作成) for the current one-liner.
+the [template README](.github/README.md#リポジトリ作成) for the current one-liner.
 
 ## Review Workflow
 
@@ -108,16 +108,26 @@ chktex sotsuron.tex thesis.tex
 
 ## Detailed Documentation
 
-*Note: docs/ directory contains development-specific information, except
-docs/README.md*
+*Note: docs/ directory contains development-specific information*
 
 - **[Development Guide](docs/CLAUDE-DEVELOPMENT.md)** - Architecture, thesis type detection, workflow inventory, testing, ecosystem integration
-- **[docs/README.md](docs/README.md)** - Author-information template (name, student ID, thesis type)
-  filled in by the student. GitHub resolves READMEs in the order `.github/` → root → `docs/`,
-  so this repository still shows root README.md; student repositories show docs/README.md
-  because student-repo-management removes root README.md at creation time.
+
+### Which README is shown where
+
+GitHub resolves READMEs in the order `.github/` → root → `docs/`, and
+student-repo-management removes `.github/README.md` at repository creation.
+The two files therefore surface in exactly one place each:
+
+- **[.github/README.md](.github/README.md)** - Template documentation (setup, writing
+  procedure, FAQ). Shown on this repository's front page; deleted in student repositories.
+- **[README.md](README.md)** - Author-information template (name, student ID, thesis type,
+  title) filled in by the student. Shown on the student repository's front page.
+
+Links out of `.github/README.md` may be relative because it only ever renders here.
+Links out of `WRITING-GUIDE.md` into `.github/README.md` must be absolute, since that
+file survives into student repositories where the target does not.
 
 The student-facing writing workflow is documented in
 [latex-ecosystem STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
-(ecosystem-wide flow) and this repo's [README.md](README.md) / [WRITING-GUIDE.md](WRITING-GUIDE.md)
-(concrete steps).
+(ecosystem-wide flow) and this repo's [.github/README.md](.github/README.md) /
+[WRITING-GUIDE.md](WRITING-GUIDE.md) (concrete steps).
