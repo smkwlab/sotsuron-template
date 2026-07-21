@@ -4,7 +4,7 @@
 
 このガイドは、GitHub Desktop を使った論文執筆の詳細な操作手順を説明します。
 卒業論文・修士論文の両方に対応しています。
-基本的な使い方は [README.md](README.md) を先に確認してください。
+基本的な使い方は [テンプレートの README](https://github.com/smkwlab/sotsuron-template/blob/main/.github/README.md) を先に確認してください。
 
 Git の詳しい知識は必要ありません。GitHub Desktop の操作だけで論文執筆を完了できます。
 

@@ -6,7 +6,7 @@ The student-facing writing workflow is documented elsewhere and is not
 duplicated here: the ecosystem-wide flow lives in
 [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md),
 and this template's concrete steps (GitHub Desktop operations, submit-tag
-procedure, FAQ) live in [README.md](../README.md) and
+procedure, FAQ) live in [.github/README.md](../.github/README.md) and
 [WRITING-GUIDE.md](../WRITING-GUIDE.md).
 
 ## Architecture
