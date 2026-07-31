@@ -57,11 +57,11 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
 
 3. **0th-draft ブランチに切り替え**
    - GitHub Desktop で `Current Branch` → `0th-draft` を選択
-   - 以降も、提出後は自動で作成されるブランチ（1st-draft等）を選択
+   - 以降も、PR 提出後に自動作成される次稿ブランチ（`1st-draft`, `2nd-draft`, ...）を選択
 
 ### 3. 論文執筆の流れ（draft PR サイクル）
 
-draft ブランチで執筆し、Pull Request で添削を受け、自動作成される次の稿のブランチで改稿を続ける繰り返しを **draft PR サイクル**と呼びます。
+draft ブランチで執筆し、Pull Request で添削を受け、自動作成される次稿ブランチで改稿を続ける繰り返しを **draft PR サイクル**と呼びます。
 
 ```
 0th-draft: 目次案作成・提出
@@ -76,6 +76,8 @@ abstract-1st: 概要執筆・提出
 ```
 
 **重要**: PRは教員による添削・フィードバック用です。レビューへの対応完了後は**自分でPRをクローズ**し、次の執筆を続けること。
+
+**PR の base（マージ先）は前稿ブランチ**にします（例: `base: 0th-draft` ← `compare: 1st-draft`）。前の稿がない最初の `0th-draft` の PR だけ `base: main` です。こうすると差分が前稿からの変更点だけになり、添削を受けやすくなります。
 
 > この draft PR サイクル（PR はマージせずクローズ・次稿ブランチ自動作成などの共通ルール）の全体像は
 > [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
@@ -140,14 +142,14 @@ abstract-1st: 概要執筆・提出
 1. `sotsuron.tex` を編集
 2. 章・節の構成を記述（内容は未記入でOK）
 3. commit & push
-4. GitHub で Pull Request 作成
+4. GitHub で Pull Request 作成（`base: main` ← `compare: 0th-draft`）
 
-### 2. 第1稿執筆（1st-draft）
+### 2. 第1稿以降の執筆（`1st-draft` 以降）
 
-1. 自動作成された `1st-draft` ブランチに切り替え
+1. 自動作成された次稿ブランチ（第1稿なら `1st-draft`）に切り替え
 2. `sotsuron.tex` に内容を記述
 3. 定期的に commit & push
-4. 完成したら Pull Request 作成
+4. 完成したら Pull Request 作成（base は前稿ブランチ。第1稿なら `base: 0th-draft` ← `compare: 1st-draft`）
 
 ### 3. 添削対応とPRのクローズ
 
@@ -166,6 +168,7 @@ abstract-1st: 概要執筆・提出
 3. **次稿執筆**
    - 各稿のPR作成時に次稿ブランチが自動作成済み
    - 前稿のPRクローズと並行して次稿執筆可能
+   - PR の base は常に前稿ブランチ（例: `base: 1st-draft` ← `compare: 2nd-draft`）
 
 ## 📝 執筆時の注意
 
