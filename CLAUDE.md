@@ -71,7 +71,8 @@ This template uses a simplified Pull Request-based review workflow:
 - **abstract-xth**: Abstract/summary branches (abstract-1st, abstract-2nd, ...)
 
 **Workflow:**
-1. Student creates PR from draft branch to previous draft (or main for 1st-draft)
+1. Student opens a PR whose base is the previous draft branch (`main` for `0th-draft`,
+   the only draft with no predecessor)
 2. PR shows only changes since previous revision for efficient review
 3. Faculty reviews via GitHub PR comments and suggestions
 4. After review, PR is closed (not merged) and student continues on next draft

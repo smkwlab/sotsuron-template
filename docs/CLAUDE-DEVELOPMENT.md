@@ -59,7 +59,7 @@ Simplified GitHub Actions-based supervision system:
 - Abstract branches: `abstract-1st` → `abstract-2nd` → ...
 
 **Faculty Review Features:**
-- Draft PRs target previous draft branch (1st-draft→main, 2nd-draft→1st-draft, 3rd-draft→2nd-draft, etc.)
+- Draft PRs use the previous draft branch as base: the PR from `0th-draft` has base `main`, the PR from `1st-draft` has base `0th-draft`, and so on
 - Shows only incremental changes from previous revision for efficient review
 - GitHub PR comments and suggestions for feedback
 - Automated next draft branch creation after PR opened

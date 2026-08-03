@@ -79,6 +79,7 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
    - 🔍 ボタン（View LaTeX PDF）をクリックして VSCode 内でプレビュー
 4. GitHub Desktop で commit & push
 5. GitHub Desktop で `Create Pull Request` をクリック
+   - ブラウザが開いたら base が **`main`** になっていることを確認（`base: main` ← `compare: 0th-draft`。最初の稿なので前の稿がない）
    - `Title` に **0th-draft** を記述
    - 説明や質問があれば記述
    - `Create pull request` をクリック
@@ -114,9 +115,13 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
 
 1. 印刷して推敲を実施
 2. GitHub Desktop で `Create Pull Request` をクリック
-3. `Title` に **1st-draft** を記述
-4. 変更点などを説明欄に記述
-5. `Create pull request` をクリック
+3. ブラウザが開いたら base を**前稿ブランチ**（この場合は `0th-draft`）に変更
+   - `base: 0th-draft` ← `compare: 1st-draft` という形になる
+   - base は `main` のままになっているので、必ず確認して変更する
+   - こうすると差分が前稿からの変更点だけになり、添削を受けやすくなる
+4. `Title` に **1st-draft** を記述
+5. 変更点などを説明欄に記述
+6. `Create pull request` をクリック
 
 ### 4. 添削結果の確認
 
@@ -152,11 +157,11 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
 
 #### 5.1 自動ブランチ作成
 
-**重要**: 0th-draft、1st-draft、2nd-draft のPRを作成すると、**次稿用ブランチが自動的に作成されます**。
+**重要**: 各稿のPRを作成すると、**次稿ブランチが自動的に作成されます**。
 
 1. **PRを作成すると自動実行**
-   - 例：1st-draft のPR作成 → 2nd-draft ブランチが自動作成
-   - PRのコメントに「🌿 次稿用ブランチを自動作成しました」と通知
+   - 例：`1st-draft` のPR作成 → `2nd-draft` ブランチが自動作成
+   - PRのコメントに次稿ブランチを作成した旨が通知される
 
 2. **自動作成されたブランチに切り替え**
    - GitHub Desktop で `Fetch origin` をクリック
@@ -166,6 +171,8 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
 
 3. **手動作成が必要な場合のみ**（自動作成が失敗した場合）
    - 教員に相談してください
+
+**PR の base**: 次稿の PR も base は前稿ブランチにします（例: `base: 1st-draft` ← `compare: 2nd-draft`）。GitHub Desktop から PR を作ると base は `main` のままなので、毎回変更してください。
 
 #### 5.2 効率的な執筆方法
 
@@ -236,7 +243,10 @@ bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
 1. 概要ファイル（`gaiyou.tex` または `abstract.tex`）を編集
 2. 論文本体と同様にcommit & push
 3. PR作成時のタイトル: `abstract-1st` など
-4. 次稿は自動作成されたブランチで継続
+4. base は論文本体と同じ考え方で前稿ブランチにする
+   - `abstract-1st` の PR: base は分岐元のブランチ（例: `base: 5th-draft` ← `compare: abstract-1st`）
+   - `abstract-2nd` 以降の PR: `base: abstract-1st` ← `compare: abstract-2nd` のように 1 つ前の概要ブランチ
+5. 次稿は自動作成されたブランチで継続
 
 ### 7. 論文提出
 
