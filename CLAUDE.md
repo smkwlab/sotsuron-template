@@ -120,7 +120,8 @@ student-repo-management removes `.github/README.md` at repository creation.
 The two files therefore surface in exactly one place each:
 
 - **[.github/README.md](.github/README.md)** - Template documentation (setup, writing
-  procedure, FAQ). Shown on this repository's front page; deleted in student repositories.
+  environment, LaTeX usage). Shown on this repository's front page; deleted in student
+  repositories.
 - **[README.md](README.md)** - Author-information template (name, student ID, thesis type,
   title) filled in by the student. Shown on the student repository's front page.
 
@@ -128,7 +129,11 @@ Links out of `.github/README.md` may be relative because it only ever renders he
 Links out of `WRITING-GUIDE.md` into `.github/README.md` must be absolute, since that
 file survives into student repositories where the target does not.
 
-The student-facing writing workflow is documented in
-[latex-ecosystem STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
-(ecosystem-wide flow) and this repo's [.github/README.md](.github/README.md) /
-[WRITING-GUIDE.md](WRITING-GUIDE.md) (concrete steps).
+Student-facing documentation is split across three layers; keep each fact in one of them:
+
+- [latex-ecosystem STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md) -
+  the process and its rules (ecosystem-wide)
+- [latex-ecosystem GITHUB-DESKTOP-GUIDE.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md) -
+  GitHub Desktop and browser operations (ecosystem-wide)
+- this repo's [.github/README.md](.github/README.md) (environment, files, LaTeX) and
+  [WRITING-GUIDE.md](WRITING-GUIDE.md) (abstract writing, submission tags, thesis-only FAQ)

@@ -5,8 +5,10 @@ This document provides detailed development guidance for sotsuron-template.
 The student-facing writing workflow is documented elsewhere and is not
 duplicated here: the ecosystem-wide flow lives in
 [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md),
-and this template's concrete steps (GitHub Desktop operations, submit-tag
-procedure, FAQ) live in [.github/README.md](../.github/README.md) and
+the GitHub Desktop operations in
+[GITHUB-DESKTOP-GUIDE.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md),
+and this template's own material (environment, LaTeX usage, abstract writing,
+submission tags) in [.github/README.md](../.github/README.md) and
 [WRITING-GUIDE.md](../WRITING-GUIDE.md).
 
 ## Architecture
@@ -116,7 +118,7 @@ whole ecosystem:
 ├── CLAUDE.md                 # Claude Code guidance (this repo)
 ├── docs/CLAUDE-DEVELOPMENT.md # This file
 ├── README.md                 # Template documentation (student-facing)
-└── WRITING-GUIDE.md          # Academic writing guidance (student-facing)
+└── WRITING-GUIDE.md          # Thesis-specific guidance: abstract, submission (student-facing)
 ```
 
 ## Document Structure Standards

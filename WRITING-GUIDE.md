@@ -1,340 +1,86 @@
-# 論文執筆詳細ガイド
+# 論文執筆ガイド（卒業論文・修士論文）
 
-## はじめに
+卒業論文・修士論文の執筆で、他の文書と違う部分だけをまとめたガイドです。
 
-このガイドは、GitHub Desktop を使った論文執筆の詳細な操作手順を説明します。
-卒業論文・修士論文の両方に対応しています。
-基本的な使い方は [テンプレートの README](https://github.com/smkwlab/sotsuron-template/blob/main/.github/README.md) を先に確認してください。
+- **執筆プロセスの流れとルール**（draft PR サイクル・PR の base・PR クローズ） → [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
+- **GitHub Desktop とブラウザの操作**（クローン・ブランチ切り替え・commit & push・PR 作成・Suggestion 適用） → [GITHUB-DESKTOP-GUIDE.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md)
+- **執筆環境・ファイル構成・LaTeX の書き方** → [テンプレートの README](https://github.com/smkwlab/sotsuron-template/blob/main/.github/README.md)
+- **本書** → 概要の執筆、論文提出、卒論・修論固有の疑問
 
-Git の詳しい知識は必要ありません。GitHub Desktop の操作だけで論文執筆を完了できます。
+## 概要の執筆
 
-## 前提条件・初期設定
+**重要**: 概要の執筆は、**教員から指示があったタイミング**で開始します。通常、論文本体がある程度完成した段階（3rd-draft 以降）です。指示があるまで始めないでください。
 
-### リポジトリの作成（未作成の場合）
+### 概要用ブランチの作成
 
-**前提条件**: Docker Desktop と GitHub Desktop がインストール済み
+最初の概要ブランチだけは自分で作成します（以降は自動作成されます）。
 
-**スクリプトでリポジトリを作成**：
-```bash
-bash <(curl -fsSL https://repo-setup.smkwlab.net) thesis
-```
+- ブランチ名: `abstract-1st`（英文概要 `abstract.tex`）/ `gaiyou-1st`（日本語概要 `gaiyou.tex`）
+- 分岐元: **その時点で最新の稿ブランチ**（例: `5th-draft`。`submit` タグを付けた後であれば、そのタグを付けたブランチ）
 
-**実行手順**：
-1. 上記コマンドを実行
-2. GitHub認証：ワンタイムコードをブラウザで入力
-3. 学籍番号を入力
-4. 自動でリポジトリ作成・セットアップ完了
+操作手順は [GITHUB-DESKTOP-GUIDE.md の「ブランチを自分で作る場合」](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md#ブランチを自分で作る場合) を参照してください。
 
-### 自動設定される内容
+### 概要の執筆と提出
 
-リポジトリ作成時に以下が自動設定されています：
-- **論文タイプ別ファイル調整**（卒論生には卒論用、修論生には修論用ファイルのみ配置）
-- **LaTeX devcontainer 追加済み**
-- 0th-draft ブランチの作成
-- レビュー用PRの設定
-
-### 論文タイプ別ファイル構成
-
-**卒業論文学生の場合：**
-- `sotsuron.tex` - 論文本体
-- `gaiyou.tex` - 概要
-- `example.tex`, `example-gaiyou.tex` - 参考例
-
-**修士論文学生の場合：**
-- `thesis.tex` - 論文本体  
-- `abstract.tex` - 概要
-
-## 基本的な流れ（draft PR サイクル）
-
-1. **リポジトリをPCにクローン**
-2. **0th-draft ブランチで目次案を作成・提出**
-3. **自動作成された 1st-draft ブランチで第1稿を執筆・提出**
-4. **教員の添削を確認し、必要に応じてSuggestionを適用**
-5. **自動作成された 2nd-draft ブランチで第2稿を執筆**
-6. **3稿目以降も同様に繰り返し（次稿ブランチは自動作成）**
-7. **教員の指示で概要執筆開始**（論文本体がある程度完成した段階）
-
-> この 2〜6 の繰り返しが **draft PR サイクル**です。共通ルール（PR はマージせずクローズ・次稿ブランチ自動作成など）の全体像は
-> [STUDENT-WORKFLOW.md](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
-> にまとまっています。
-
-## 詳細な操作手順
-
-### 1. リポジトリのクローン
-
-1. 作成されたリポジトリのURLにアクセス
-   - リポジトリ作成完了時に表示されたURL、または
-   - https://github.com/smkwlab/学籍番号-sotsuron（または学籍番号-thesis）
-2. `Code` ボタンをクリック
-3. `Open with GitHub Desktop` をクリック
-4. 保存場所を確認して `Clone` ボタンをクリック
-
-### 2. 目次案の作成（0th-draft）
-
-1. GitHub Desktop で `Current Branch` が `0th-draft` になっていることを確認
-   - もし `main` になっている場合は `0th-draft` に切り替え
-2. VSCode で論文メインファイル（`sotsuron.tex` または `thesis.tex`）を編集し、`chapter`, `section`, `subsection` などを記述
-3. **PDF の生成・プレビュー**
-   - VSCode で ▷ ボタン（Build LaTeX project）をクリックして PDF を生成
-   - 🔍 ボタン（View LaTeX PDF）をクリックして VSCode 内でプレビュー
-4. GitHub Desktop で commit & push
-5. GitHub Desktop で `Create Pull Request` をクリック
-   - ブラウザが開いたら base が **`main`** になっていることを確認（`base: main` ← `compare: 0th-draft`。最初の稿なので前の稿がない）
-   - `Title` に **0th-draft** を記述
-   - 説明や質問があれば記述
-   - `Create pull request` をクリック
-
-### 3. 第1稿の執筆（1st-draft）
-
-#### 3.1 ブランチの切り替え
-
-0th-draft のPRを作成すると、1st-draft ブランチが自動作成されます：
-
-1. **自動作成されたブランチに切り替え**
-   - GitHub Desktop で `Fetch origin` をクリック
-   - `Current Branch` をクリックして一覧を表示
-   - **`origin/1st-draft`** を選択
-   - 「Create a new branch」が表示されるので、`Create branch` をクリック
-
-#### 3.2 論文執筆
-
-1. 現在のブランチが `1st-draft` であることを確認
-2. `Open in Visual Studio Code` で編集開始
-3. **LaTeX Workshop 拡張機能**を使って論文を執筆
-   - `.tex` ファイルを開くと LaTeX Workshop が自動起動
-   - ファイル保存時に `textlint` による自動チェックが起動
-   - **問題** タブで textlint の指摘を確認し適宜対応
-4. **PDF の生成・プレビュー**
-   - VSCode で ▷ ボタン（Build LaTeX project）をクリックして PDF 生成
-   - 🔍 ボタン（View LaTeX PDF）をクリックして VSCode 内でプレビュー
-   - または F1 → `LaTeX Workshop: View PDF` でプレビュー
-5. GitHub Desktop で commit & push
-6. 執筆完了まで 1〜5 を繰り返し
-
-#### 3.3 添削依頼
-
-1. 印刷して推敲を実施
-2. GitHub Desktop で `Create Pull Request` をクリック
-3. ブラウザが開いたら base を**前稿ブランチ**（この場合は `0th-draft`）に変更
-   - `base: 0th-draft` ← `compare: 1st-draft` という形になる
-   - base は `main` のままになっているので、必ず確認して変更する
-   - こうすると差分が前稿からの変更点だけになり、添削を受けやすくなる
-4. `Title` に **1st-draft** を記述
-5. 変更点などを説明欄に記述
-6. `Create pull request` をクリック
-
-### 4. 添削結果の確認
-
-#### 4.1 コメントの確認
-
-添削コメントは **あなたが作成したPR（1st-draft等）** で確認してください：
-
-- 直前版からの変更点に対するコメント
-- 新規追加部分への指摘
-- 論文全体に対するコメント
-
-#### 4.2 Suggestionへの対応
-
-教員からSuggestionがある場合：
-
-1. **Suggestionの適用**
-   ```
-   GitHub Web画面で：
-   1. suggestion右上の「Apply suggestion」ボタンをクリック
-   2. 複数ある場合は「Add suggestion to batch」で一括適用
-   3. 「Commit suggestions」でcommit実行
-   ```
-
-2. **適用完了の通知**
-   ```
-   PR画面で：
-   1. 右側の「Reviewers」セクションを確認
-   2. 教員名の横の🔄アイコンをクリック
-   3. 「Re-request review」を選択
-   ```
-
-### 5. 次稿の準備（2nd-draft以降）
-
-#### 5.1 自動ブランチ作成
-
-**重要**: 各稿のPRを作成すると、**次稿ブランチが自動的に作成されます**。
-
-1. **PRを作成すると自動実行**
-   - 例：`1st-draft` のPR作成 → `2nd-draft` ブランチが自動作成
-   - PRのコメントに次稿ブランチを作成した旨が通知される
-
-2. **自動作成されたブランチに切り替え**
-   - GitHub Desktop で `Fetch origin` をクリック
-   - `Current Branch` をクリックして一覧を表示
-   - **`origin/2nd-draft`** のように表示されているブランチを選択
-   - 「Create a new branch」が表示されるので、`Create branch` をクリック
-
-3. **手動作成が必要な場合のみ**（自動作成が失敗した場合）
-   - 教員に相談してください
-
-**PR の base**: 次稿の PR も base は前稿ブランチにします（例: `base: 1st-draft` ← `compare: 2nd-draft`）。GitHub Desktop から PR を作ると base は `main` のままなので、毎回変更してください。
-
-#### 5.2 効率的な執筆方法
-
-**待機時間を短縮**: 前稿のPR提出後、教員のレビュー完了を待たずに次稿の執筆を開始できます。
-
-```
-基本的な流れ：
-1st-draft PR提出 → すぐに2nd-draft執筆開始
-         ↓（並行して）
-    教員レビュー完了
-         ↓
-    レビューコメントを確認・反映して3rd-draftへ
-```
-
-**注意**: PR はマージされません。教員のレビュー完了後、PR をクローズして次稿で執筆を継続します。
-
-#### 5.3 PRのクローズ
-
-教員の添削対応が完了したら：
-
-1. **添削内容の確認・対応**
-   ```
-   GitHub Web で教員のコメントを確認
-   ↓
-   必要に応じて修正・追記
-   ↓
-   commit & push で対応完了
-   ```
-
-2. **PRのクローズ**
-   ```
-   GitHub Web で該当PRページにアクセス
-   ↓
-   「Close pull request」ボタンをクリック
-   ↓
-   次稿執筆継続（並行作業可能）
-   ```
-
-**重要**: 教員はPRをマージしません。対応完了後は自分でPRをクローズします。
-
-### 6. 概要の執筆
-
-**重要**: 概要の執筆は、**教員から指示があったタイミング**で開始します。通常、論文本体がある程度完成した段階です。
-
-#### 6.1 概要用ブランチの作成
-
-1. **教員からの指示を待つ**
-   - 教員が「概要執筆を開始してください」と指示
-
-2. **最初のブランチは手動作成**
-   - GitHub Desktop で `New Branch`
-   - 名前: `abstract-1st`
-   - ベース: **その時点で最新の稿ブランチ**（例：`5th-draft`）
-   - `Create branch` → `Publish branch`
-
-3. **PRを作成すると次のブランチが自動作成**
-   - abstract-1st のPR作成 → abstract-2nd ブランチが自動作成（abstract-1st をベースとする）
-   - abstract-2nd のPR作成 → abstract-3rd ブランチが自動作成（abstract-2nd をベースとする）
-   - 以降も同様
-
-   **ブランチの切り替え方法**:
-   - GitHub Desktop で `Fetch origin` → `Current Branch` をクリック
-   - **`origin/abstract-2nd`** のように表示されているブランチを選択
-   - 「Create a new branch」で `Create branch` をクリック
-
-#### 6.2 概要の執筆手順
-
-1. 概要ファイル（`gaiyou.tex` または `abstract.tex`）を編集
-2. 論文本体と同様にcommit & push
-3. PR作成時のタイトル: `abstract-1st` など
-4. base は論文本体と同じ考え方で前稿ブランチにする
+1. 概要ファイル（`gaiyou.tex` または `abstract.tex`）を編集する
+2. 論文本体と同様に commit & push する
+3. PR を作成する（タイトル例: `abstract-1st`）
+   - base は論文本体と同じ考え方で**前の稿のブランチ**にする
    - `abstract-1st` の PR: base は分岐元のブランチ（例: `base: 5th-draft` ← `compare: abstract-1st`）
-   - `abstract-2nd` 以降の PR: `base: abstract-1st` ← `compare: abstract-2nd` のように 1 つ前の概要ブランチ
-5. 次稿は自動作成されたブランチで継続
+   - `abstract-2nd` 以降の PR: 1 つ前の概要ブランチ（例: `base: abstract-1st` ← `compare: abstract-2nd`）
+4. PR を作成すると次の概要ブランチ（`abstract-2nd` など）が自動作成される
+5. 添削への対応と PR のクローズは論文本体と同じ
 
-### 7. 論文提出
+概要完成後の手順は教員から口頭で説明されます。
 
-教員から「論文提出OK」の許可が出たら：
+## 論文提出
 
-#### 7.1 提出版へのタグ付与
+教員から「論文提出 OK」の許可が出たら、提出版のコミットにタグを付けます。タグの付け方は [GITHUB-DESKTOP-GUIDE.md の「タグを付ける」](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md#8-タグを付ける) を参照してください。
 
-1. **submit tagを作成**
-   
-   GitHub Desktop で：
-   - `History` で最新コミットを右クリック
-   - `Create Tag...` をクリック
-   - `Name` に **submit** と入力
-   - `Create Tag` → `Push origin`
+### `submit` タグ（論文本体の提出）
 
-2. **印刷物の提出** も忘れずに実施
+1. 提出版のコミットに **`submit`** タグを付けて push する
+2. **印刷物の提出**も忘れずに行う
+3. その後、教員の指示で概要の執筆に移る
 
-#### 7.2 概要執筆の準備
+`submit` タグは論文本体の提出許可版を示す目印です。このタグで `main` への自動処理は起こりません（タグを push すると PDF 付きの Release が作成されます）。
 
-submit タグ作成後、教員の指示で概要執筆を開始します：
+### `final` タグ（最終提出）
 
-1. **概要用ブランチの作成**
-   - GitHub Desktop で `New Branch`
-   - 名前: `abstract-1st`
-   - ベース: **submit タグを作成したブランチ**
-   - `Create branch` → `Publish branch`
+概要も含めて最終提出の許可が出たら、教員の指示に従って **`final`** または `final-*` 形式のタグを付けます。このタグを push すると、`main` への提出 PR が自動作成されます。**この PR のマージは教員が行います**。
 
-2. **概要の執筆**
-   - 概要ファイル（`gaiyou.tex` または `abstract.tex`）を編集
-   - 論文本体と同様にcommit & push
-   - PR作成時のタイトル: `abstract-1st`
-
-3. **以降の流れ**
-   - 概要の添削・修正を繰り返し
-   - 概要完成後の手順は教員から口頭で説明されます
-
-#### 7.3 submit tag の注意点
-
-- **提出マーク**: submit タグは論文本体の提出版を示します
-- **概要執筆**: submit タグ後、概要執筆に移行
-- **次の段階**: 概要完成後の手順は別途教員から指示されます
-
-## よくある質問
-
-### Q: ブランチを間違って作成した場合は？
-A: 基本的にブランチは自動作成されるため、手動作成は不要です。問題がある場合は教員に相談してください。
-
-### Q: commitを間違えた場合は？
-A: 新しいcommitで修正するか、教員に相談してください。
-
-### Q: 競合解決がうまくいかない場合は？
-A: 教員に相談してください。一緒に解決方法を確認します。
-
-### Q: Re-request reviewボタンが見つからない場合は？
-A: PRがOpenの状態で、かつ教員が一度reviewしている必要があります。
-
-### Q: PDFが生成されない場合は？
-A: LaTeX コンパイルエラーが発生している可能性があります。以下を確認してください：
-- VSCode の **問題** タブでエラー内容を確認
-- LaTeX Workshop の **出力** タブでコンパイルログを確認
-- 日本語の文字化けや未定義コマンドがないかチェック
-
-### Q: LaTeX Workshop拡張機能が動作しない場合は？
-A: 以下を確認してください：
-- devcontainer環境で作業していることを確認
-- VSCode左下に「Dev Container」の表示があることを確認
-- 拡張機能タブで LaTeX Workshop が有効になっていることを確認
-
-### Q: 自動作成されたブランチが見つからない場合は？
-A: 以下の手順で確認してください：
-1. GitHub Desktop で `Fetch origin` を実行
-2. `Current Branch` をクリック
-3. **`origin/`** で始まるブランチ名を探す（例：`origin/2nd-draft`）
-4. 見つからない場合は、PRの自動作成が失敗している可能性があります
+## 卒論・修論でよくある質問
 
 ### Q: いつ概要の執筆を始めれば良いですか？
-A: 教員からの指示を待ってください。通常、論文本体の構成が固まった段階（3rd-draft以降）で指示があります。その時点で最新の稿ブランチをベースにabstract-1stを作成します。
 
+教員からの指示を待ってください。通常、論文本体の構成が固まった段階（3rd-draft 以降）で指示があります。その時点で最新の稿ブランチを分岐元にして `abstract-1st` を作成します。
 
-## 注意点
+### Q: PDF が生成されません
 
-- **ブランチ名の命名**: 0th-draft → 1st-draft → 2nd-draft の順序を守る
-- **自動作成ブランチ**: PRを作成すると次稿ブランチが自動作成される
-- **commit頻度**: こまめにcommitして変更履歴を残す
-- **PR作成**: 各稿の完成時に必ずPRを作成する
-- **印刷推敲**: 画面だけでなく必ず印刷して確認する
+LaTeX のコンパイルエラーが発生している可能性があります。次を確認してください。
 
-## トラブル時の連絡先
+- VS Code の **問題** タブでエラー内容を確認する
+- LaTeX Workshop の **出力** タブでコンパイルログを確認する
+- 日本語の文字化けや未定義コマンドがないか確認する
 
-質問があれば、遠慮なく smkwlabML ML へ連絡してください。
-他の学生も同じ疑問を持っている可能性があります。
+### Q: LaTeX Workshop 拡張機能が動作しません
+
+- devcontainer 環境で作業していることを確認する（VS Code 左下に「Dev Container」と表示される）
+- 拡張機能タブで LaTeX Workshop が有効になっていることを確認する
+
+### Q: 卒業論文と修士論文でファイルが違います
+
+自分の種別に対応するファイルだけがリポジトリに置かれています。
+
+- **卒業論文**: `sotsuron.tex`（本体）、`gaiyou.tex`（概要）、`example.tex` / `example-gaiyou.tex`（参考例）
+- **修士論文**: `thesis.tex`（本体）、`abstract.tex`（概要）
+
+## 執筆時の注意
+
+- **印刷推敲**: 画面だけでなく、必ず印刷して読み直す（章ごとの印刷推敲を推奨）
+- **commit 頻度**: こまめに commit して変更履歴を残す
+- **textlint**: 保存時に日本語校正の指摘が出るので、**問題** タブで確認して対応する
+
+## 質問・相談
+
+質問があれば、遠慮なく smkwlabML へ連絡してください。他の学生も同じ疑問を持っている可能性があります。

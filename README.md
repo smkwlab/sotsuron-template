@@ -25,5 +25,6 @@
 ## このリポジトリの使い方
 
 - **執筆の流れ・レビューの受け方**: [STUDENT-WORKFLOW ガイド](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/STUDENT-WORKFLOW.md)
-- **詳細な操作手順・トラブルシューティング**: [WRITING-GUIDE.md](WRITING-GUIDE.md)
+- **GitHub Desktop の操作手順・トラブルシューティング**: [GITHUB-DESKTOP-GUIDE](https://github.com/smkwlab/latex-ecosystem/blob/main/docs/GITHUB-DESKTOP-GUIDE.md)
+- **概要の執筆・論文提出**: [WRITING-GUIDE.md](WRITING-GUIDE.md)
 - **質問・トラブル**: smkwlabML または担当教員まで
