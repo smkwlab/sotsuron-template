@@ -11,12 +11,9 @@ VS Code devContainer を用いて、LaTeX 処理系、および textlint を内�
 
 #### 前提条件
 
-以下のソフトウェアがインストール済みであること：
-
-1. **Docker Desktop** - LaTeX 環境の実行に必要
-2. **GitHub Desktop** - リポジトリ管理・同期に必要
-3. **GitHub CLI (gh)** - リポジトリ作成スクリプトの実行に必要
-   - [インストール方法](https://github.com/smkwlab/student-repo-management/blob/main/docs/INSTALL-GH.md)
+Docker Desktop・GitHub Desktop・GitHub CLI (gh) が必要です。
+インストール方法と、Windows で必要な WSL の準備は
+[リポジトリ作成の前提条件](https://github.com/smkwlab/student-repo-management/blob/main/docs/PREREQUISITES.md) を参照してください。
 
 #### 準備
 
@@ -26,7 +23,7 @@ GitHub CLI の認証を完了してください：
 gh auth login
 ```
 
-**注意:** `gh` コマンドが見つからない場合は [インストール方法](https://github.com/smkwlab/student-repo-management/blob/main/docs/INSTALL-GH.md) を参照してください。
+**注意:** `gh` コマンドが見つからない場合は [リポジトリ作成の前提条件](https://github.com/smkwlab/student-repo-management/blob/main/docs/PREREQUISITES.md) を参照してください。
 
 #### リポジトリ作成
 
