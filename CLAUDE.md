@@ -122,8 +122,9 @@ The two files therefore surface in exactly one place each:
 - **[.github/README.md](.github/README.md)** - Template documentation (setup, writing
   environment, LaTeX usage). Shown on this repository's front page; deleted in student
   repositories.
-- **[README.md](README.md)** - Author-information template (name, student ID, thesis type,
-  title) filled in by the student. Shown on the student repository's front page.
+- **[README.md](README.md)** - Author-information template (name, student ID, thesis
+  type, affiliation, year) filled in automatically when the repository is created.
+  Shown on the student repository's front page.
 
 Links out of `.github/README.md` may be relative because it only ever renders here.
 Links out of `WRITING-GUIDE.md` into `.github/README.md` must be absolute, since that
