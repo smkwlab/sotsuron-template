@@ -12,7 +12,7 @@
 ## 執筆するファイル
 
 - **卒業論文**: `sotsuron.tex`（本体）、`gaiyou.tex`（概要・教員の指示後に執筆）
-- **修士論文**: `thesis.tex`（本体）、`abstract.tex`（概要・教員の指示後に執筆）
+- **修士論文**: `thesis.tex`（本体）、`abstract.tex`（概要）
 
 ## このリポジトリの使い方
 
